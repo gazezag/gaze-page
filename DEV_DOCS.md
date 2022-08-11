@@ -1,7 +1,7 @@
 <!--
  * @Author: Ethan Teng
  * @Date: 2022-08-11 14:15:00
- * @LastEditTime: 2022-08-11 14:15:03
+ * @LastEditTime: 2022-08-11 16:56:05
  * @Description:
 -->
 
@@ -350,42 +350,127 @@ Fist Input Delay, 首次输入延迟，用户首次和页面交互（单击链�
 >
 > 以下是类型接口
 
-```typescript
-export interface ExceptionMetrics {
-  mechanism: {
-    type: 'js' | 'resource' | 'unhandledrejection' | 'http' | 'cors' | 'vue';
-  };
-  value?: string;
-  type: string;
-  stackTrace?: {
-    frames: Array<{
-      filename: string;
-      functionName: string;
-      lineno: number;
-      colno: number;
-    }>;
-  };
-  pageInformation?: Object;
-  breadcrumbs?: Array<{
-    name:
-      | 'page-information'
-      | 'origin-information'
-      | 'router-change-record'
-      | 'click-behavior-record'
-      | 'custom-define-record'
-      | 'http-record';
-    page: string;
-    timestamp: number | string;
-    value: Object;
-  }>;
-  errorUid: string;
-  meta?: {
-    file: number;
-    // col 错误列号
-    col: number;
-    // row 错误行号
-    row: number;
-  };
+JS 运行时报错
+
+```json
+{
+  "type": "js",
+  "errorUid": "anMtVW5jYXVnaHQlMjBFcnJvciUzQSUyMHRoaXMlMjBpcyUyMGElMjBFcnJvci1odHRwJTNBJTJGJTJGbG9jYWxob3N0JTNBMzAwMCUyRnNyYyUyRnRlc3QudHM=",
+  "time": 3127.7000000029802,
+  "message": "Uncaught Error: this is a Error",
+  "detail": {
+    "type": "Error",
+    "stackTrace": [
+      {
+        "filename": "http://localhost:3000/src/test.ts",
+        "functionName": "t",
+        "line": 2,
+        "col": 9
+      },
+      {
+        "filename": "http://localhost:3000/src/main.ts?t=1660205635051",
+        "functionName": "",
+        "line": 14,
+        "col": 3
+      }
+    ]
+  },
+  "breadcrumbs": []
+}
+```
+
+未捕获的 Promise reject
+
+```json
+{
+  "type": "unhandledrejection",
+  "errorUid": "dW5oYW5kbGVkcmVqZWN0aW9uLUVycm9yJTNBJTIwVGhpcyUyMGlzJTIwYSUyMHByb21pc2UlMjByZWplY3Rpb24tRXJyb3I=",
+  "time": 3089,
+  "message": {},
+  "detail": {
+    "type": {},
+    "stackTrace": [
+      {
+        "filename": "http://localhost:3000/src/test.ts?t=1660205726302",
+        "functionName": "",
+        "line": 3,
+        "col": 12
+      },
+      {
+        "filename": "<anonymous>",
+        "functionName": "new Promise",
+        "line": null,
+        "col": null
+      },
+      {
+        "filename": "http://localhost:3000/src/test.ts?t=1660205726302",
+        "functionName": "t",
+        "line": 2,
+        "col": 3
+      },
+      {
+        "filename": "http://localhost:3000/src/main.ts?t=1660205726302",
+        "functionName": "",
+        "line": 14,
+        "col": 3
+      }
+    ]
+  },
+  "breadcrumbs": []
+}
+```
+
+资源出错
+
+```json
+{
+  "type": "resource",
+  "errorUid": "cmVzb3VyY2UtaHR0cCUzQSUyRiUyRnRoaXNpc2FlcnJvcmltZy5jb20lMkZlcnJvckltZy1JTUc=",
+  "time": 6944.0999999940395,
+  "message": "",
+  "detail": {
+    "type": "Unknwon",
+    "src": "http://thisisaerrorimg.com/errorImg",
+    "outerHTML": "<img src=\"http://thisisaerrorimg.com/errorImg\" alt=\"img\">",
+    "tagName": "IMG"
+  },
+  "breadcrumbs": []
+}
+```
+
+http 请求出错
+
+> 这里不好测试, 只是示例
+
+```json
+{
+  "type": "http",
+  "errorUid": "anMtVW5jYXVnaHQlMjBFcnJvciUzQSUyMHRoaXMlMjBpcyUyMGElMjBFcnJvci1odHRwJTNBJTJGJTJGbG9jYWxob3N0JTNBMzAwMCUyRnNyYyUyRnRlc3QudHM=",
+  "time": 3127.7000000029802,
+  "message": "xxxxxxx",
+  "detail": {
+    "status": 404,
+    "response": "",
+    "statusText": "Not Found"
+  },
+  "breadcrumbs": []
+}
+```
+
+跨域报错
+
+> 这里不好测试, 只是示例
+
+```json
+{
+  "type": "cors",
+  "errorUid": "anMtVW5jYXVnaHQlMjBFcnJvciUzQSUyMHRoaXMlMjBpcyUyMGElMjBFcnJvci1odHRwJTNBJTJGJTJGbG9jYWxob3N0JTNBMzAwMCUyRnNyYyUyRnRlc3QudHM=",
+  "time": 3127.7000000029802,
+  "message": "",
+  "detail": {
+    "tagName": "script"
+  },
+  "breadcrumbs": []
 }
 ```
 
