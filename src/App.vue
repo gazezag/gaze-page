@@ -8,8 +8,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { darkTheme } from 'naive-ui';
 
 export default defineComponent({
-  name: 'App'
+  name: 'App',
+  setup() {
+    return {
+      darkTheme
+    };
+  }
 });
 </script>

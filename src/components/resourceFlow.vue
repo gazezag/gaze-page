@@ -107,7 +107,7 @@ export default defineComponent({
                 position: 'insideRight'
               }
             },
-            color: 'white',
+            // color: 'white',
             data: startTime_data
           },
           {

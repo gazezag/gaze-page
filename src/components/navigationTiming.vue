@@ -64,427 +64,427 @@ export default defineComponent({
       // 此处都是一些 echarts 的 API
 
       // 虽然报错但是能跑......
-      charts.setOption(
-        {
-          title: {
-            text: 'NavigationTiming',
-            subtext: '',
-            x: '4%',
+      // charts.setOption(
+      //   {
+      //     title: {
+      //       text: 'NavigationTiming',
+      //       subtext: '',
+      //       x: '4%',
 
-            textStyle: {
-              color: '#151515',
-              fontSize: '22'
-            },
-            subtextStyle: {
-              color: '#90979c',
-              fontSize: '16'
-            }
-          },
-          tooltip: {
-            trigger: 'axis'
-          },
-          legend: {
-            data: [
-              {
-                name: '1',
-                icon: 'rect',
-                color: {
-                  type: 'linear',
-                  x: 0,
-                  x2: 1,
-                  y: 0,
-                  y2: 0,
-                  colorStops: [
-                    { offset: 0, color: 'rgba(5, 75, 170, 1)' },
-                    { offset: 1, color: 'rgba(11, 151, 232, 1)' }
-                  ]
-                } //盖子的颜色
-              },
-              {
-                name: '2',
-                icon: 'rect',
-                color: {
-                  type: 'linear',
-                  x: 0,
-                  x2: 1,
-                  y: 0,
-                  y2: 0,
-                  colorStops: [
-                    { offset: 0, color: 'rgba(90, 45, 192, 1)' },
-                    { offset: 1, color: 'rgba(184, 91, 225, 1)' }
-                  ]
-                } //盖子的颜色
-              },
-              {
-                name: '3',
-                icon: 'rect',
-                color: {
-                  type: 'linear',
-                  x: 0,
-                  x2: 0,
-                  y: 1,
-                  y2: 0,
-                  colorStops: [
-                    { offset: 0, color: 'rgba(3, 120, 134, 1)' },
-                    { offset: 1, color: 'rgba(0, 200, 188, 1)' }
-                  ]
-                } //盖子的颜色
-              },
-              '4'
-            ],
-            itemWidth: 8,
-            itemHeight: 8,
-            textStyle: {
-              fontWeight: 'normal',
-              color: '#A2A5AA'
-            }
-          },
-          xAxis: {
-            type: 'category',
-            // boundaryGap: false, // 不留白，从原点开始
-            axisLine: {
-              //设置坐标轴线
-              lineStyle: {
-                color: '#6C6F79' //改轴颜色
-              }
-            },
-            axisTick: { show: false }, //设置刻度线颜色
-            axisLabel: {
-              //坐标轴刻度标签的相关设置。
-              interval: 0, //设置为 1，表示『隔一个标签显示一个标签』
-              //	margin:15,
-              textStyle: {
-                color: '#A2A5AA',
+      //       textStyle: {
+      //         color: '#151515',
+      //         fontSize: '22'
+      //       },
+      //       subtextStyle: {
+      //         color: '#90979c',
+      //         fontSize: '16'
+      //       }
+      //     },
+      //     tooltip: {
+      //       trigger: 'axis'
+      //     },
+      //     legend: {
+      //       data: [
+      //         {
+      //           name: '1',
+      //           icon: 'rect',
+      //           color: {
+      //             type: 'linear',
+      //             x: 0,
+      //             x2: 1,
+      //             y: 0,
+      //             y2: 0,
+      //             colorStops: [
+      //               { offset: 0, color: 'rgba(5, 75, 170, 1)' },
+      //               { offset: 1, color: 'rgba(11, 151, 232, 1)' }
+      //             ]
+      //           } //盖子的颜色
+      //         },
+      //         {
+      //           name: '2',
+      //           icon: 'rect',
+      //           color: {
+      //             type: 'linear',
+      //             x: 0,
+      //             x2: 1,
+      //             y: 0,
+      //             y2: 0,
+      //             colorStops: [
+      //               { offset: 0, color: 'rgba(90, 45, 192, 1)' },
+      //               { offset: 1, color: 'rgba(184, 91, 225, 1)' }
+      //             ]
+      //           } //盖子的颜色
+      //         },
+      //         {
+      //           name: '3',
+      //           icon: 'rect',
+      //           color: {
+      //             type: 'linear',
+      //             x: 0,
+      //             x2: 0,
+      //             y: 1,
+      //             y2: 0,
+      //             colorStops: [
+      //               { offset: 0, color: 'rgba(3, 120, 134, 1)' },
+      //               { offset: 1, color: 'rgba(0, 200, 188, 1)' }
+      //             ]
+      //           } //盖子的颜色
+      //         },
+      //         '4'
+      //       ],
+      //       itemWidth: 8,
+      //       itemHeight: 8,
+      //       textStyle: {
+      //         fontWeight: 'normal',
+      //         color: '#A2A5AA'
+      //       }
+      //     },
+      //     xAxis: {
+      //       type: 'category',
+      //       // boundaryGap: false, // 不留白，从原点开始
+      //       axisLine: {
+      //         //设置坐标轴线
+      //         lineStyle: {
+      //           color: '#6C6F79' //改轴颜色
+      //         }
+      //       },
+      //       axisTick: { show: false }, //设置刻度线颜色
+      //       axisLabel: {
+      //         //坐标轴刻度标签的相关设置。
+      //         interval: 0, //设置为 1，表示『隔一个标签显示一个标签』
+      //         //	margin:15,
+      //         textStyle: {
+      //           color: '#A2A5AA',
 
-                fontSize: 10
-              }
-            },
-            data: ['1', '2', '3', '4', '5']
-          },
+      //           fontSize: 10
+      //         }
+      //       },
+      //       data: ['1', '2', '3', '4', '5']
+      //     },
 
-          yAxis: [
-            // 左侧y轴
-            {
-              type: 'value',
-              // name: '金额(万元)',
-              min: 0,
-              max: 300,
-              interval: 200,
-              nameTextStyle: {
-                color: '#A2A5AA',
-                fontSize: 10
-              },
-              splitLine: {
-                show: false
-              },
-              axisTick: {
-                show: false
-              },
-              axisLine: {
-                lineStyle: {
-                  color: '#6C6F79' //改轴颜色
-                }
-              },
-              axisLabel: {
-                formatter: '{value}ms',
-                textStyle: {
-                  color: '#A2A5AA', //改轴数值颜色
-                  fontSize: 10
-                }
-              }
-            },
-            // 右侧y轴设置
-            {
-              type: 'value',
-              // name: '环比(%)',
-              min: 0,
-              max: 600,
-              interval: 20,
-              nameTextStyle: {
-                color: '#A2A5AA',
-                fontSize: 10
-              },
-              splitLine: {
-                lineStyle: {
-                  color: 'rgba(255,255,255,0.1)' //改轴颜色
-                }
-              },
-              axisTick: {
-                show: false
-              },
-              axisLine: {
-                lineStyle: {
-                  color: '#6C6F79' //改轴颜色
-                }
-              },
-              axisLabel: {
-                formatter: '{value}ms',
-                textStyle: {
-                  color: '#A2A5AA', //改轴数值颜色
-                  fontSize: 10
-                }
-              }
-            }
-          ],
-          series: [
-            // rediect
+      //     yAxis: [
+      //       // 左侧y轴
+      //       {
+      //         type: 'value',
+      //         // name: '金额(万元)',
+      //         min: 0,
+      //         max: 300,
+      //         interval: 200,
+      //         nameTextStyle: {
+      //           color: '#A2A5AA',
+      //           fontSize: 10
+      //         },
+      //         splitLine: {
+      //           show: false
+      //         },
+      //         axisTick: {
+      //           show: false
+      //         },
+      //         axisLine: {
+      //           lineStyle: {
+      //             color: '#6C6F79' //改轴颜色
+      //           }
+      //         },
+      //         axisLabel: {
+      //           formatter: '{value}ms',
+      //           textStyle: {
+      //             color: '#A2A5AA', //改轴数值颜色
+      //             fontSize: 10
+      //           }
+      //         }
+      //       },
+      //       // 右侧y轴设置
+      //       {
+      //         type: 'value',
+      //         // name: '环比(%)',
+      //         min: 0,
+      //         max: 600,
+      //         interval: 20,
+      //         nameTextStyle: {
+      //           color: '#A2A5AA',
+      //           fontSize: 10
+      //         },
+      //         splitLine: {
+      //           lineStyle: {
+      //             color: 'rgba(255,255,255,0.1)' //改轴颜色
+      //           }
+      //         },
+      //         axisTick: {
+      //           show: false
+      //         },
+      //         axisLine: {
+      //           lineStyle: {
+      //             color: '#6C6F79' //改轴颜色
+      //           }
+      //         },
+      //         axisLabel: {
+      //           formatter: '{value}ms',
+      //           textStyle: {
+      //             color: '#A2A5AA', //改轴数值颜色
+      //             fontSize: 10
+      //           }
+      //         }
+      //       }
+      //     ],
+      //     series: [
+      //       // rediect
 
-            {
-              z: 1,
-              type: 'bar',
-              name: 'redicet',
-              barWidth: 8,
-              barGap: '50%',
-              data: redirect,
-              itemStyle: {
-                color: {
-                  type: 'linear',
-                  x: 0,
-                  x2: 1,
-                  y: 0,
-                  y2: 0,
-                  colorStops: [
-                    { offset: 0, color: 'rgba(5, 75, 170, 1)' },
-                    { offset: 0.5, color: 'rgba(11, 151, 232, 1)' },
-                    { offset: 0.5, color: 'rgba(10, 57, 123, 1)' },
-                    { offset: 1, color: 'rgba(117, 77, 253, 1)' }
-                  ]
-                }
-              }
-            },
+      //       {
+      //         z: 1,
+      //         type: 'bar',
+      //         name: 'redicet',
+      //         barWidth: 8,
+      //         barGap: '50%',
+      //         data: redirect,
+      //         itemStyle: {
+      //           color: {
+      //             type: 'linear',
+      //             x: 0,
+      //             x2: 1,
+      //             y: 0,
+      //             y2: 0,
+      //             colorStops: [
+      //               { offset: 0, color: 'rgba(5, 75, 170, 1)' },
+      //               { offset: 0.5, color: 'rgba(11, 151, 232, 1)' },
+      //               { offset: 0.5, color: 'rgba(10, 57, 123, 1)' },
+      //               { offset: 1, color: 'rgba(117, 77, 253, 1)' }
+      //             ]
+      //           }
+      //         }
+      //       },
 
-            // DNS
+      //       // DNS
 
-            {
-              z: 1,
-              type: 'bar',
-              name: 'DNS',
-              barWidth: 8,
-              // barGap: '-50%',
-              data: DNS,
-              itemStyle: {
-                color: {
-                  type: 'linear',
-                  x: 0,
-                  x2: 1,
-                  y: 0,
-                  y2: 0,
-                  colorStops: [
-                    { offset: 0, color: 'rgba(90, 45, 192, 1)' },
-                    { offset: 0.5, color: 'rgba(184, 91, 225, 1)' },
-                    { offset: 0.5, color: 'rgba(50, 13, 133, 1)' },
-                    { offset: 1, color: 'rgba(90, 45, 192, 1)' }
-                  ]
-                }
-              }
-            },
+      //       {
+      //         z: 1,
+      //         type: 'bar',
+      //         name: 'DNS',
+      //         barWidth: 8,
+      //         // barGap: '-50%',
+      //         data: DNS,
+      //         itemStyle: {
+      //           color: {
+      //             type: 'linear',
+      //             x: 0,
+      //             x2: 1,
+      //             y: 0,
+      //             y2: 0,
+      //             colorStops: [
+      //               { offset: 0, color: 'rgba(90, 45, 192, 1)' },
+      //               { offset: 0.5, color: 'rgba(184, 91, 225, 1)' },
+      //               { offset: 0.5, color: 'rgba(50, 13, 133, 1)' },
+      //               { offset: 1, color: 'rgba(90, 45, 192, 1)' }
+      //             ]
+      //           }
+      //         }
+      //       },
 
-            // TCP
+      //       // TCP
 
-            {
-              z: 1,
-              type: 'bar',
-              name: 'TCP',
-              barWidth: 8,
-              // barGap: '-50%',
-              data: TCP,
-              itemStyle: {
-                color: {
-                  type: 'linear',
-                  x: 1,
-                  x2: 0,
-                  y: 0,
-                  y2: 0,
-                  colorStops: [
-                    { offset: 0, color: 'rgba(3, 120, 134, 1)' },
-                    { offset: 0.5, color: 'rgba(0, 200, 188, 1)' },
-                    { offset: 0.5, color: 'rgba(0, 66, 73, 1)' },
-                    { offset: 1, color: 'rgba(0, 127, 119, 1)' }
-                  ]
-                }
-              }
-            },
-            // SSL
+      //       {
+      //         z: 1,
+      //         type: 'bar',
+      //         name: 'TCP',
+      //         barWidth: 8,
+      //         // barGap: '-50%',
+      //         data: TCP,
+      //         itemStyle: {
+      //           color: {
+      //             type: 'linear',
+      //             x: 1,
+      //             x2: 0,
+      //             y: 0,
+      //             y2: 0,
+      //             colorStops: [
+      //               { offset: 0, color: 'rgba(3, 120, 134, 1)' },
+      //               { offset: 0.5, color: 'rgba(0, 200, 188, 1)' },
+      //               { offset: 0.5, color: 'rgba(0, 66, 73, 1)' },
+      //               { offset: 1, color: 'rgba(0, 127, 119, 1)' }
+      //             ]
+      //           }
+      //         }
+      //       },
+      //       // SSL
 
-            {
-              z: 1,
-              type: 'bar',
-              name: 'SSL',
-              barWidth: 8,
-              // barGap: '-50%',
-              data: SSL,
-              itemStyle: {
-                color: {
-                  type: 'linear',
-                  x: 1,
-                  x2: 0,
-                  y: 0,
-                  y2: 0,
-                  colorStops: [
-                    { offset: 0, color: 'rgba(3, 160, 134, 1)' },
-                    { offset: 0.5, color: 'rgba(0, 200, 110, 1)' },
-                    { offset: 0.5, color: 'rgba(0, 55, 73, 1)' },
-                    { offset: 1, color: 'rgba(0, 127, 33, 1)' }
-                  ]
-                }
-              }
-            },
+      //       {
+      //         z: 1,
+      //         type: 'bar',
+      //         name: 'SSL',
+      //         barWidth: 8,
+      //         // barGap: '-50%',
+      //         data: SSL,
+      //         itemStyle: {
+      //           color: {
+      //             type: 'linear',
+      //             x: 1,
+      //             x2: 0,
+      //             y: 0,
+      //             y2: 0,
+      //             colorStops: [
+      //               { offset: 0, color: 'rgba(3, 160, 134, 1)' },
+      //               { offset: 0.5, color: 'rgba(0, 200, 110, 1)' },
+      //               { offset: 0.5, color: 'rgba(0, 55, 73, 1)' },
+      //               { offset: 1, color: 'rgba(0, 127, 33, 1)' }
+      //             ]
+      //           }
+      //         }
+      //       },
 
-            // TTFB
+      //       // TTFB
 
-            {
-              z: 1,
-              type: 'bar',
-              name: 'TTFB',
-              barWidth: 8,
-              // barGap: '-50%',
-              data: TTFB,
-              itemStyle: {
-                color: {
-                  type: 'linear',
-                  x: 1,
-                  x2: 0,
-                  y: 0,
-                  y2: 0,
-                  colorStops: [
-                    { offset: 0, color: 'rgba(22, 120, 134, 1)' },
-                    { offset: 0.5, color: 'rgba(1, 11, 22, 1)' },
-                    { offset: 0.5, color: 'rgba(0, 66, 32, 1)' },
-                    { offset: 1, color: 'rgba(0, 127, 15, 1)' }
-                  ]
-                }
-              }
-            },
+      //       {
+      //         z: 1,
+      //         type: 'bar',
+      //         name: 'TTFB',
+      //         barWidth: 8,
+      //         // barGap: '-50%',
+      //         data: TTFB,
+      //         itemStyle: {
+      //           color: {
+      //             type: 'linear',
+      //             x: 1,
+      //             x2: 0,
+      //             y: 0,
+      //             y2: 0,
+      //             colorStops: [
+      //               { offset: 0, color: 'rgba(22, 120, 134, 1)' },
+      //               { offset: 0.5, color: 'rgba(1, 11, 22, 1)' },
+      //               { offset: 0.5, color: 'rgba(0, 66, 32, 1)' },
+      //               { offset: 1, color: 'rgba(0, 127, 15, 1)' }
+      //             ]
+      //           }
+      //         }
+      //       },
 
-            // transmit
+      //       // transmit
 
-            {
-              z: 1,
-              type: 'bar',
-              name: 'transmit',
-              barWidth: 8,
-              // barGap: '-50%',
-              data: transmit,
-              itemStyle: {
-                color: {
-                  type: 'linear',
-                  x: 1,
-                  x2: 0,
-                  y: 0,
-                  y2: 0,
-                  colorStops: [
-                    { offset: 0, color: 'rgba(3, 120, 11, 1)' },
-                    { offset: 0.5, color: 'rgba(0, 66, 188, 1)' },
-                    { offset: 0.5, color: 'rgba(0, 66, 66, 1)' },
-                    { offset: 1, color: 'rgba(0, 72, 119, 1)' }
-                  ]
-                }
-              }
-            },
+      //       {
+      //         z: 1,
+      //         type: 'bar',
+      //         name: 'transmit',
+      //         barWidth: 8,
+      //         // barGap: '-50%',
+      //         data: transmit,
+      //         itemStyle: {
+      //           color: {
+      //             type: 'linear',
+      //             x: 1,
+      //             x2: 0,
+      //             y: 0,
+      //             y2: 0,
+      //             colorStops: [
+      //               { offset: 0, color: 'rgba(3, 120, 11, 1)' },
+      //               { offset: 0.5, color: 'rgba(0, 66, 188, 1)' },
+      //               { offset: 0.5, color: 'rgba(0, 66, 66, 1)' },
+      //               { offset: 1, color: 'rgba(0, 72, 119, 1)' }
+      //             ]
+      //           }
+      //         }
+      //       },
 
-            // domParse
-            {
-              z: 1,
-              type: 'bar',
-              name: 'domParse',
-              barWidth: 8,
-              // barGap: '-50%',
-              data: domParse,
-              itemStyle: {
-                color: {
-                  type: 'linear',
-                  x: 1,
-                  x2: 0,
-                  y: 0,
-                  y2: 0,
-                  colorStops: [
-                    { offset: 0, color: 'rgba(3, 200, 13, 1)' },
-                    { offset: 0.5, color: 'rgba(0, 200, 55, 1)' },
-                    { offset: 0.5, color: 'rgba(0, 55, 73, 1)' },
-                    { offset: 1, color: 'rgba(0, 127, 66, 1)' }
-                  ]
-                }
-              }
-            },
+      //       // domParse
+      //       {
+      //         z: 1,
+      //         type: 'bar',
+      //         name: 'domParse',
+      //         barWidth: 8,
+      //         // barGap: '-50%',
+      //         data: domParse,
+      //         itemStyle: {
+      //           color: {
+      //             type: 'linear',
+      //             x: 1,
+      //             x2: 0,
+      //             y: 0,
+      //             y2: 0,
+      //             colorStops: [
+      //               { offset: 0, color: 'rgba(3, 200, 13, 1)' },
+      //               { offset: 0.5, color: 'rgba(0, 200, 55, 1)' },
+      //               { offset: 0.5, color: 'rgba(0, 55, 73, 1)' },
+      //               { offset: 1, color: 'rgba(0, 127, 66, 1)' }
+      //             ]
+      //           }
+      //         }
+      //       },
 
-            //domContentLoadedCallback
-            {
-              z: 1,
-              type: 'bar',
-              name: 'domContentLoadedCallback',
-              barWidth: 8,
-              // barGap: '-50%',
-              data: domContentLoadedCallback,
-              itemStyle: {
-                color: {
-                  type: 'linear',
-                  x: 1,
-                  x2: 0,
-                  y: 0,
-                  y2: 0,
-                  colorStops: [
-                    { offset: 0, color: 'rgba(2, 120, 200, 1)' },
-                    { offset: 0.5, color: 'rgba(0, 88, 44, 1)' },
-                    { offset: 0.5, color: 'rgba(0, 120, 73, 1)' },
-                    { offset: 1, color: 'rgba(0, 44, 119, 1)' }
-                  ]
-                }
-              }
-            },
-            // L
-            {
-              z: 1,
-              type: 'bar',
-              name: 'L',
-              barWidth: 8,
-              // barGap: '-50%',
-              data: L,
-              itemStyle: {
-                color: {
-                  type: 'linear',
-                  x: 1,
-                  x2: 0,
-                  y: 0,
-                  y2: 0,
-                  colorStops: [
-                    { offset: 0, color: 'rgba(3, 123, 134, 1)' },
-                    { offset: 0.5, color: 'rgba(0, 123, 188, 1)' },
-                    { offset: 0.5, color: 'rgba(0, 123, 73, 1)' },
-                    { offset: 1, color: 'rgba(0, 127, 119, 1)' }
-                  ]
-                }
-              }
-            },
-            // 上方折线
-            {
-              name: 'Sum',
-              type: 'line',
-              symbol: 'circle',
-              symbolSize: 10, //设定实心点的大小
-              yAxisIndex: 1,
-              lineStyle: {
-                color: 'rgba(180, 34, 80, 1)'
-              },
-              itemStyle: {
-                borderWidth: 2,
-                borderColor: '#fff',
-                color: {
-                  type: 'linear',
-                  x: 0,
-                  x2: 1,
-                  y: 0,
-                  y2: 0,
-                  colorStops: [
-                    { offset: 0, color: 'rgba(176, 29, 81, 1)' },
-                    { offset: 1, color: 'rgba(249, 117, 60, 1)' }
-                  ]
-                }
-              },
-              data: dataYline
-            }
-          ]
-        }!
-      );
+      //       //domContentLoadedCallback
+      //       {
+      //         z: 1,
+      //         type: 'bar',
+      //         name: 'domContentLoadedCallback',
+      //         barWidth: 8,
+      //         // barGap: '-50%',
+      //         data: domContentLoadedCallback,
+      //         itemStyle: {
+      //           color: {
+      //             type: 'linear',
+      //             x: 1,
+      //             x2: 0,
+      //             y: 0,
+      //             y2: 0,
+      //             colorStops: [
+      //               { offset: 0, color: 'rgba(2, 120, 200, 1)' },
+      //               { offset: 0.5, color: 'rgba(0, 88, 44, 1)' },
+      //               { offset: 0.5, color: 'rgba(0, 120, 73, 1)' },
+      //               { offset: 1, color: 'rgba(0, 44, 119, 1)' }
+      //             ]
+      //           }
+      //         }
+      //       },
+      //       // L
+      //       {
+      //         z: 1,
+      //         type: 'bar',
+      //         name: 'L',
+      //         barWidth: 8,
+      //         // barGap: '-50%',
+      //         data: L,
+      //         itemStyle: {
+      //           color: {
+      //             type: 'linear',
+      //             x: 1,
+      //             x2: 0,
+      //             y: 0,
+      //             y2: 0,
+      //             colorStops: [
+      //               { offset: 0, color: 'rgba(3, 123, 134, 1)' },
+      //               { offset: 0.5, color: 'rgba(0, 123, 188, 1)' },
+      //               { offset: 0.5, color: 'rgba(0, 123, 73, 1)' },
+      //               { offset: 1, color: 'rgba(0, 127, 119, 1)' }
+      //             ]
+      //           }
+      //         }
+      //       },
+      //       // 上方折线
+      //       {
+      //         name: 'Sum',
+      //         type: 'line',
+      //         symbol: 'circle',
+      //         symbolSize: 10, //设定实心点的大小
+      //         yAxisIndex: 1,
+      //         lineStyle: {
+      //           color: 'rgba(180, 34, 80, 1)'
+      //         },
+      //         itemStyle: {
+      //           borderWidth: 2,
+      //           borderColor: '#fff',
+      //           color: {
+      //             type: 'linear',
+      //             x: 0,
+      //             x2: 1,
+      //             y: 0,
+      //             y2: 0,
+      //             colorStops: [
+      //               { offset: 0, color: 'rgba(176, 29, 81, 1)' },
+      //               { offset: 1, color: 'rgba(249, 117, 60, 1)' }
+      //             ]
+      //           }
+      //         },
+      //         data: dataYline
+      //       }
+      //     ]
+      //   }!
+      // );
     };
 
     // onMounted 就是之前 vue2 的 mounted

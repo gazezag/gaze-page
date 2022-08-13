@@ -50,11 +50,11 @@
 </template>
 
 <script lang="ts">
-import { storeToRefs } from 'pinia';
-import { defineComponent, h, Component, ref } from 'vue';
-import { NIcon, useMessage, NCard, NCollapse, NCollapseItem } from 'naive-ui';
-import type { MenuOption } from 'naive-ui';
-import { RouterLink } from 'vue-router';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'ErrorInformation'
+});
 </script>
 <style>
 .n-collapse {
