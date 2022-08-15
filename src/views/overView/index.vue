@@ -1,5 +1,6 @@
 <template>
-  <side-menu />
+  <!-- <side-menu /> -->
+  <div>11111</div>
 </template>
 
 <script lang="ts">
@@ -10,8 +11,8 @@ import { useStore } from 'store/counter';
 import { storeToRefs } from 'pinia';
 
 export default defineComponent({
-  name: 'Hello',
-  components: { SideMenu },
+  name: 'layout',
+  // components: { SideMenu },
   setup() {
     return {};
   }

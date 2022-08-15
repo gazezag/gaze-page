@@ -48,6 +48,18 @@ export default defineConfig(({ mode }) => {
         }
       }
     },
+    css: {
+      preprocessorOptions: {
+        less: {
+          modifyVars: {
+            hack: `true; @import (reference) "${resolve(
+              'src/assets/less/index.less'
+            )}";`
+          },
+          javascriptEnabled: true
+        }
+      }
+    },
 
     build: {
       target: 'es2015',
