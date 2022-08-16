@@ -32,8 +32,6 @@ import { NIcon, useMessage } from 'naive-ui';
 import type { MenuOption } from 'naive-ui';
 import { RouterLink } from 'vue-router';
 import {
-  Alert28Regular,
-  Person12Filled,
   BookOpen28Filled,
   ArrowCollapseAll24Filled,
   ConferenceRoom16Regular,
@@ -157,19 +155,13 @@ const menuOptions: MenuOption[] = [
 
 export default defineComponent({
   name: 'sideMenu',
-  components: {
-    Alert28Regular,
-    Person12Filled
-  },
+  components: {},
 
   setup() {
-    onMounted(() => {
-      
-    });
     return {
       activeKey: ref<string | null>(null),
       collapsed: ref(false),
-      menuOptions,
+      menuOptions
     };
   }
 });
