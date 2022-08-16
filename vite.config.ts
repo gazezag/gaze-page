@@ -86,6 +86,7 @@ export default defineConfig(({ mode }) => {
         assets: catAlias('./src/assets'),
         components: catAlias('./src/components'),
         router: catAlias('./src/router'),
+        static: catAlias('./src/static'),
         store: catAlias('./src/store'),
         types: catAlias('./src/types'),
         utils: catAlias('./src/utils'),
