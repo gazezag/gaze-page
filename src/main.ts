@@ -13,4 +13,5 @@ app.use(router);
 
 app.mount('#app');
 
+// TODO
 init();
