@@ -5,28 +5,40 @@
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
 import { init } from 'echarts';
+import { useStore } from 'store/resourceFlow';
+// ResourceFlow数据对象
+const store = useStore();
+const ResourceFlow = store.ResourceFlow;
 
-var startTime_data = [40, 40, 35, 39, 40, 46, 43, 45, 39, 45];
-var responseEnd_data = [20, 38, 35, 40, 39, 14, 27, 45, 28, 28];
-var DNS_data = [40, 40, 35, 11, 39, 22, 35, 9, 28, 56];
-var initialConnect_data = [38, 40, 33, 39, 37, 26, 23, 56, 28, 28];
-var SSL_data = [38, 0, 35, 9, 3, 45, 43, 43, 27, 28];
-var request_data = [0, 0, 3, 37, 39, 34, 45, 43, 28, 27];
-var TTFB_data = [0, 0, 33, 0, 0, 45, 0, 0, 28, 27];
-var transmit_data = [0, 0, 0, 0, 0, 0, 0, 0, 27, 0];
-var contentDownload_data = [0, 0, 0, 0, 0, 0, 0, 0, 27, 0];
+var startTime_data = [];
+var responseEnd_data = [];
+var DNS_data = [];
+var initialConnect_data = [];
+var SSL_data = [];
+var request_data = [];
+var TTFB_data = [];
+var transmit_data = [];
+var contentDownload_data = [];
+
+for (var i = 0; i < ResourceFlow.value.length; i++) {
+  startTime_data.push(ResourceFlow.value[i].startTime);
+  responseEnd_data.push(ResourceFlow.value[i].responseEnd);
+  DNS_data.push(ResourceFlow.value[i].DNS);
+  initialConnect_data.push(ResourceFlow.value[i].initialConnect);
+  SSL_data.push(ResourceFlow.value[i].SSL);
+  request_data.push(ResourceFlow.value[i].request);
+  TTFB_data.push(ResourceFlow.value[i].TTFB);
+  transmit_data.push(ResourceFlow.value[i].transmit);
+  contentDownload_data.push(ResourceFlow.value[i].contentDownload);
+}
+
 //y轴名称（要根据资源个数来确定）
 var yAxis_name = [
   'resource1',
   'resource2',
   'resource3',
   'resource4',
-  'resource5',
-  'resource6',
-  'resource7',
-  'resource8',
-  'resource9',
-  'resource10'
+  'resource5'
 ];
 
 // vue3 暴露了专门定义组件的函数 defineComponent
@@ -107,7 +119,7 @@ export default defineComponent({
                 position: 'insideRight'
               }
             },
-            // color: 'white',
+            color: 'white',
             data: startTime_data
           },
           {
