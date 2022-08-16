@@ -1,34 +1,31 @@
 <template>
   <n-space vertical>
-    <n-layout>
-      <n-layout has-sider>
-        <n-layout-sider
-          bordered
-          show-trigger
-          collapse-mode="width"
+    <n-layout has-sider>
+      <n-layout-sider
+        bordered
+        show-trigger
+        collapse-mode="width"
+        :collapsed-width="64"
+        :width="240"
+        :native-scrollbar="false"
+        style="max-height: 620px"
+      >
+        <n-menu
           :collapsed-width="64"
-          :width="240"
-          :native-scrollbar="false"
-          style="max-height: 620px"
-        >
-          <n-menu
-            :collapsed-width="64"
-            :collapsed-icon-size="22"
-            :options="menuOptions"
-          />
-        </n-layout-sider>
-        <n-layout>
-          <router-view />
-        </n-layout>
-        <n-layout style="max-height: 320px" />
-      </n-layout>
+          :collapsed-icon-size="22"
+          :options="menuOptions"
+        />
+      </n-layout-sider>
+
+      <n-layout-content>
+        <router-view />
+      </n-layout-content>
     </n-layout>
   </n-space>
 </template>
 
 <script lang="ts">
-import { defineComponent, h, Component, ref, onMounted } from 'vue';
-import { NIcon, useMessage } from 'naive-ui';
+import { defineComponent, h, ref } from 'vue';
 import type { MenuOption } from 'naive-ui';
 import { RouterLink } from 'vue-router';
 import {
@@ -40,9 +37,8 @@ import {
   City24Regular,
   ChannelDismiss24Regular
 } from '@vicons/fluent';
-function renderIcon(icon: Component) {
-  return () => h(NIcon, null, { default: () => h(icon) });
-}
+import { renderIcon } from 'utils/render';
+
 const menuOptions: MenuOption[] = [
   {
     label: () =>
@@ -166,17 +162,18 @@ export default defineComponent({
   }
 });
 </script>
+
 <style lang="less" scoped>
 .n-layout-sider {
-  /deep/ .n-menu-item-content__icon {
+  :deep(.n-menu-item-content__icon) {
     color: rgb(92, 92, 92);
   }
 
-  /deep/ .n-menu .n-menu-item-content .n-menu-item-content-header a {
+  :deep(.n-menu .n-menu-item-content .n-menu-item-content-header a) {
     color: rgb(92, 92, 92);
   }
 
-  /deep/.n-menu .n-menu-item-content.n-menu-item-content--selected {
+  :deep(.n-menu .n-menu-item-content.n-menu-item-content--selected) {
     &::before {
       background-color: lighten(@mainColor, 65%);
     }

@@ -30,23 +30,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, h, Component, ref } from 'vue';
-import { NIcon, useMessage } from 'naive-ui';
-import {
-  Alert28Regular,
-  Person12Filled,
-  BookOpen28Filled,
-  ArrowCollapseAll24Filled,
-  ConferenceRoom16Regular,
-  Box16Regular,
-  BriefcaseMedical24Regular,
-  City24Regular,
-  ChannelDismiss24Regular
-} from '@vicons/fluent';
+import { defineComponent, ref } from 'vue';
+import { Alert28Regular, Person12Filled } from '@vicons/fluent';
 import SideMenu from './sideMenu.vue';
-function renderIcon(icon: Component) {
-  return () => h(NIcon, null, { default: () => h(icon) });
-}
 
 export default defineComponent({
   name: 'layout',
