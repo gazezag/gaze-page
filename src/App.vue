@@ -1,8 +1,6 @@
 <template>
   <n-config-provider>
-    <naive-provider>
-      <router-view />
-    </naive-provider>
+    <router-view />
   </n-config-provider>
 </template>
 
