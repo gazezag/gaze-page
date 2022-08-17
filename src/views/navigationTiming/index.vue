@@ -18,7 +18,7 @@ const domParse = [];
 const redirect = [];
 const domContentLoadedCallback = [];
 const L = [];
-for (var i = 0; i < NavigationTiming_List.length; i++) {
+for (let i = 0; i < NavigationTiming_List.length; i++) {
   DNS.push(NavigationTiming_List[i].value.DNS);
   TCP.push(NavigationTiming_List[i].value.TCP);
   SSL.push(NavigationTiming_List[i].value.SSL);
@@ -32,8 +32,8 @@ for (var i = 0; i < NavigationTiming_List.length; i++) {
   L.push(NavigationTiming_List[i].value.L);
 }
 
-var dataYline = [];
-for (var i = 0; i < DNS.length; i++) {
+const dataYline = [];
+for (let i = 0; i < DNS.length; i++) {
   dataYline[i] =
     DNS[i] +
     TCP[i] +
