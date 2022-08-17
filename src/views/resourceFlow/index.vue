@@ -6,34 +6,34 @@
 import { defineComponent, onMounted } from 'vue';
 import { init } from 'echarts';
 import { useStore } from 'store/resourceFlow';
+import { storeToRefs } from 'pinia';
 // ResourceFlow数据对象
-const store = useStore();
-const ResourceFlow = store.ResourceFlow;
+const { ResourceFlow } = storeToRefs(useStore());
 
-var startTime_data = [];
-var responseEnd_data = [];
-var DNS_data = [];
-var initialConnect_data = [];
-var SSL_data = [];
-var request_data = [];
-var TTFB_data = [];
-var transmit_data = [];
-var contentDownload_data = [];
+const startTime_data = [];
+const responseEnd_data = [];
+const DNS_data = [];
+const initialConnect_data = [];
+const SSL_data = [];
+const request_data = [];
+const TTFB_data = [];
+const transmit_data = [];
+const contentDownload_data = [];
 
-for (var i = 0; i < ResourceFlow.value.length; i++) {
-  startTime_data.push(ResourceFlow.value[i].startTime);
-  responseEnd_data.push(ResourceFlow.value[i].responseEnd);
-  DNS_data.push(ResourceFlow.value[i].DNS);
-  initialConnect_data.push(ResourceFlow.value[i].initialConnect);
-  SSL_data.push(ResourceFlow.value[i].SSL);
-  request_data.push(ResourceFlow.value[i].request);
-  TTFB_data.push(ResourceFlow.value[i].TTFB);
-  transmit_data.push(ResourceFlow.value[i].transmit);
-  contentDownload_data.push(ResourceFlow.value[i].contentDownload);
-}
+// for (const i = 0; i < ResourceFlow.value.length; i++) {
+//   startTime_data.push(ResourceFlow.value[i].startTime);
+//   responseEnd_data.push(ResourceFlow.value[i].responseEnd);
+//   DNS_data.push(ResourceFlow.value[i].DNS);
+//   initialConnect_data.push(ResourceFlow.value[i].initialConnect);
+//   SSL_data.push(ResourceFlow.value[i].SSL);
+//   request_data.push(ResourceFlow.value[i].request);
+//   TTFB_data.push(ResourceFlow.value[i].TTFB);
+//   transmit_data.push(ResourceFlow.value[i].transmit);
+//   contentDownload_data.push(ResourceFlow.value[i].contentDownload);
+// }
 
 //y轴名称（要根据资源个数来确定）
-var yAxis_name = [
+const yAxis_name = [
   'resource1',
   'resource2',
   'resource3',
