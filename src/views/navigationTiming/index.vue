@@ -5,35 +5,56 @@
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
 import { init } from 'echarts';
-import { useStore } from 'store/navigationTiming';
-//navigationTiming数组
-const store = useStore();
-const NavigationTiming_List = store.NavigationTiming_List;
-const DNS = [];
-const TCP = [];
-const SSL = [];
-const TTFB = [];
-const transmit = [];
-const domParse = [];
-const redirect = [];
-const domContentLoadedCallback = [];
-const L = [];
-for (let i = 0; i < NavigationTiming_List.length; i++) {
-  DNS.push(NavigationTiming_List[i].value.DNS);
-  TCP.push(NavigationTiming_List[i].value.TCP);
-  SSL.push(NavigationTiming_List[i].value.SSL);
-  TTFB.push(NavigationTiming_List[i].value.TTFB);
-  transmit.push(NavigationTiming_List[i].value.transmit);
-  domParse.push(NavigationTiming_List[i].value.domParse);
-  redirect.push(NavigationTiming_List[i].value.redirect);
-  domContentLoadedCallback.push(
-    NavigationTiming_List[i].value.domContentLoadedCallback
-  );
-  L.push(NavigationTiming_List[i].value.L);
-}
+import { useNavigationTimingStore } from 'store/webPerformance';
+import Mock from 'mockjs';
 
-const dataYline = [];
-for (let i = 0; i < DNS.length; i++) {
+const store = useNavigationTimingStore();
+const DNS = new Array();
+const TCP = new Array();
+const SSL = new Array();
+const TTFB = new Array();
+const transmit = new Array();
+const domParse = new Array();
+const redirect = new Array();
+const domContentLoadedCallback = new Array();
+const L = new Array();
+
+// mock_test start
+for (var i = 0; i < 5; i++) {
+  var obj = Mock.mock({
+    time: '@float(60, 100, 3, 5)',
+    redirect: '@float(60, 100, 3, 5)',
+    DNS: '@float(60, 100, 3, 5)',
+    TCP: '@float(60, 100, 3, 5)',
+    SSL: '@float(60, 100, 3, 5)',
+    TTFB: '@float(60, 100, 3, 5)',
+    transmit: '@float(60, 100, 3, 5)',
+    domParse: '@float(60, 100, 3, 5)',
+    deferExecuteDuration: '@float(60, 100, 3, 5)',
+    domContentLoadedCallback: '@float(60, 100, 3, 5)',
+    resourceLoad: '@float(60, 100, 3, 5)',
+    domReady: '@float(60, 100, 3, 5)',
+    L: '@float(60, 100, 3, 5)'
+  });
+  store.push(obj);
+}
+// mock_test over
+const NavigationTiming_List = store.navigationTimingList;
+for (var i = 0; i < NavigationTiming_List.length; i++) {
+  DNS.push(NavigationTiming_List[i].DNS);
+  TCP.push(NavigationTiming_List[i].TCP);
+  SSL.push(NavigationTiming_List[i].SSL);
+  TTFB.push(NavigationTiming_List[i].TTFB);
+  transmit.push(NavigationTiming_List[i].transmit);
+  domParse.push(NavigationTiming_List[i].domParse);
+  redirect.push(NavigationTiming_List[i].redirect);
+  domContentLoadedCallback.push(
+    NavigationTiming_List[i].domContentLoadedCallback
+  );
+  L.push(NavigationTiming_List[i].L);
+}
+var dataYline = new Array();
+for (var i = 0; i < DNS.length; i++) {
   dataYline[i] =
     DNS[i] +
     TCP[i] +
@@ -212,7 +233,7 @@ export default defineComponent({
               type: 'value',
               // name: '环比(%)',
               min: 0,
-              max: 600,
+              max: 800,
               interval: 20,
               nameTextStyle: {
                 color: '#A2A5AA',

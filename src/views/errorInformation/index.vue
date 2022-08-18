@@ -5,181 +5,227 @@ import { NIcon, useMessage, NCard, NCollapse, NCollapseItem } from 'naive-ui';
 import type { MenuOption } from 'naive-ui';
 import { RouterLink } from 'vue-router';
 import { useStore } from 'store/errorInformation';
-
+import { useErrorInfoStore } from 'store/errorInfo';
+import Mock from 'mockjs';
 export default defineComponent({
   setup() {
-    const store = useStore();
-    const Error_List = store.Error_List;
-    function isType(obj: any) {
-      if (
-        obj.type == 'js' ||
-        obj.type == 'unhandledrejection' ||
-        obj.type == 'resource'
-      )
-        return true;
-      else return false;
+    const newstore = useErrorInfoStore();
+    // mock_test start
+    for (let i = 0; i < 2; i++) {
+      const jsError = Mock.mock({
+        time: i,
+        errorUid: '@character',
+        message: '@character',
+        errorType: '@character',
+        reason: '@character',
+        stackTraceUid: '@float'
+      });
+      newstore.pushJsErrorInfo(jsError);
+      for (let j = 0; j < 2; j++) {
+        const stackTrace = Mock.mock({
+          groupId: i,
+          filename: '@character',
+          functionName: '@character',
+          line: '@float',
+          col: '@float'
+        });
+        newstore.pushStackTraceInfo(stackTrace);
+      }
     }
-    function isSrc(obj: any) {
-      if (obj.type == 'resource') return true;
-      else return false;
+
+    for (let i = 0; i < 2; i++) {
+      const resourceError = Mock.mock({
+        time: '@float',
+        errorUid: '@character',
+        message: '@character',
+        errorType: '@character',
+        src: '@character',
+        outerHtml: '@character',
+        tagName: '@character'
+      });
+      newstore.pushResourceErrorInfo(resourceError);
     }
-    function isOuterHTML(obj: any) {
-      if (obj.type == 'resource') return true;
-      else return false;
+    for (let i = 0; i < 2; i++) {
+      const corsError = Mock.mock({
+        time: '@float',
+        errorUid: '@character',
+        message: '@character',
+        tagName: '@character'
+      });
+      newstore.pushCorsErrorInfo(corsError);
     }
-    function isTagName(obj: any) {
-      if (obj.type == 'resource' || obj.type == 'cors') return true;
-      else return false;
+
+    for (let i = 0; i < 2; i++) {
+      const httpError = Mock.mock({
+        time: '@float',
+        errorUid: '@character',
+        message: '@character',
+        status: '@float',
+        statusText: '@character',
+        response: '@character'
+      });
+      newstore.pushHttpErrorInfo(httpError);
     }
-    function isStatus(obj: any) {
-      if (obj.type == 'http') return true;
-      else return false;
-    }
-    function isResponses(obj: any) {
-      if (obj.type == 'http') return true;
-      else return false;
-    }
-    function isStatusText(obj: any) {
-      if (obj.type == 'http') return true;
-      else return false;
-    }
-    function isStackTrace(obj: any) {
-      if (obj.type == 'js' || obj.type == 'unhandledrejection') return true;
-      else return false;
-    }
+    // mock_test over
+    const errors = newstore.errorInfo;
+    console.log(errors);
+
     return {
-      Error_List,
-      isType,
-      isSrc,
-      isOuterHTML,
-      isTagName,
-      isStatus,
-      isResponses,
-      isStatusText,
-      isStackTrace
+      errors
     };
   }
 });
 </script>
 
 <template>
-  <div
-    v-for="(items, index) of Error_List"
-    :key="index"
-    style="float: left; width: 250px"
-  >
-    <n-collapse>
-      <n-collapse-item title="ERROR" name="index">
+  <n-collapse class="errorlist">
+    <n-collapse-item title="JsError" name="1">
+      <div v-for="(item, index) of errors.jsError" :key="index">
         <n-collapse>
-          <n-collapse-item title="type" name="1">
-            <div>{{ items.type }}</div>
-          </n-collapse-item>
-          <n-collapse-item title="errorUid" name="2">
-            <div>{{ items.errorUid }}</div>
-          </n-collapse-item>
-          <n-collapse-item title="time" name="3">
-            <div>{{ items.time }}</div>
-          </n-collapse-item>
-          <n-collapse-item title="message" name="4">
-            <div>{{ items.message }}</div>
-          </n-collapse-item>
-          <n-collapse-item title="detail" name="5">
+          <n-collapse-item title="JsError" name="index">
             <n-collapse>
-              <n-collapse-item title="type" name="1" v-if="isType(items)">
-                {{ items.detail.type }}
+              <n-collapse-item title="time" name="1">{{
+                item.info.time
+              }}</n-collapse-item>
+              <n-collapse-item title="errorUid" name="2"
+                >{{ item.info.errorUid }}
               </n-collapse-item>
-              <n-collapse-item title="scr" name="2" v-if="isSrc(items)">
-                {{ items.detail.src }}
-              </n-collapse-item>
-              <n-collapse-item
-                title="outerHTML"
-                name="3"
-                v-if="isOuterHTML(items)"
+              <n-collapse-item title="message" name="3">
+                {{ item.info.message }}</n-collapse-item
               >
-                {{ items.detail.outerHTML }}
+              <n-collapse-item title="errorType" name="4"
+                >{{ item.info.errorType }}
               </n-collapse-item>
-              <n-collapse-item title="tagName" name="4" v-if="isTagName(items)">
-                {{ items.detail.tagName }}
+              <n-collapse-item title="reason" name="5"
+                >{{ item.info.reason }}
               </n-collapse-item>
-              <n-collapse-item title="status" name="5" v-if="isStatus(items)">
-                {{ items.detail.status }}
-              </n-collapse-item>
-              <n-collapse-item
-                title="response"
-                name="6"
-                v-if="isResponses(items)"
-              >
-                {{ items.detail.response }}
-              </n-collapse-item>
-              <n-collapse-item
-                title="statusText"
-                name="7"
-                v-if="isStatus(items)"
-              >
-                {{ items.detail.statusText }}
-              </n-collapse-item>
-              <n-collapse-item
-                title="stackTrace"
-                name="8"
-                v-if="isStackTrace(items)"
-              >
-                <div v-for="(i, k) of items.detail.stackTrace" :key="k">
+              <n-collapse-item title="stackTraceUid" name="6">{{
+                item.info.stackTraceUid
+              }}</n-collapse-item>
+              <n-collapse-item title="stackTraceList" name="7">
+                <div v-for="(i, k) of item.stackTrace" :key="k">
                   <n-collapse>
-                    <n-collapse-item title="information" name="k">
-                      <ul>
-                        <li>filename----{{ i.filename }}</li>
-                        <li>functionName----{{ i.functionName }}</li>
-                        <li>line----{{ i.line }}</li>
-                        <li>col----{{ i.col }}</li>
-                      </ul>
+                    <n-collapse-item title="stackTrace" name="1">
+                      <n-collapse>
+                        <n-collapse-item title="groupId" name="1">{{
+                          i.groupId
+                        }}</n-collapse-item>
+                        <n-collapse-item title="filename" name="2">{{
+                          i.filename
+                        }}</n-collapse-item>
+                        <n-collapse-item title="functionName" name="3">{{
+                          i.filename
+                        }}</n-collapse-item>
+                        <n-collapse-item title="line" name="4">{{
+                          i.line
+                        }}</n-collapse-item>
+                        <n-collapse-item title="col" name="5">{{
+                          i.col
+                        }}</n-collapse-item>
+                      </n-collapse>
                     </n-collapse-item>
                   </n-collapse>
                 </div>
               </n-collapse-item>
             </n-collapse>
           </n-collapse-item>
-          <n-collapse-item title="breadcrumbs" name="6">
-            <div>{{ items.breadcrumbs }}</div>
+        </n-collapse>
+      </div>
+    </n-collapse-item>
+  </n-collapse>
+  <n-collapse class="errorlist">
+    <n-collapse-item title="ResourceError" name="1">
+      <div v-for="(item, index) of errors.resourceError" :key="index">
+        <n-collapse>
+          <n-collapse-item title="ResourceError" name="index">
+            <n-collapse>
+              <n-collapse-item title="time" name="1">{{
+                item.time
+              }}</n-collapse-item>
+              <n-collapse-item title="errorUid" name="2"
+                >{{ item.errorUid }}
+              </n-collapse-item>
+              <n-collapse-item title="message" name="3">
+                {{ item.message }}</n-collapse-item
+              >
+              <n-collapse-item title="errorType" name="4"
+                >{{ item.errorType }}
+              </n-collapse-item>
+              <n-collapse-item title="src" name="5"
+                >{{ item.src }}
+              </n-collapse-item>
+              <n-collapse-item title="outHtml" name="6">{{
+                item.outerHtml
+              }}</n-collapse-item>
+              <n-collapse-item title="tagName" name="7">{{
+                item.tagName
+              }}</n-collapse-item>
+            </n-collapse>
           </n-collapse-item>
         </n-collapse>
-      </n-collapse-item>
-    </n-collapse>
-  </div>
-
-  <!-- 
-  <n-collapse>
-    <n-collapse-item title="ERROR 1" name="1">
-      <n-collapse>
-        <n-collapse-item title="type" name="1">
-          <div>resource</div>
-        </n-collapse-item>
-        <n-collapse-item title="errorUid" name="2">
-          <div>123456</div>
-        </n-collapse-item>
-        <n-collapse-item title="time" name="3">
-          <div>12:00</div>
-        </n-collapse-item>
-        <n-collapse-item title="message" name="4">
-          <div>string</div>
-        </n-collapse-item>
-        <n-collapse-item title="detail" name="5">
+      </div>
+    </n-collapse-item>
+  </n-collapse>
+  <n-collapse class="errorlist">
+    <n-collapse-item title="HttpError" name="1">
+      <div v-for="(item, index) of errors.httpError" :key="index">
+        <n-collapse>
+          <n-collapse-item title="HttpError" name="index">
             <n-collapse>
-              <n-collapse-item title="type" name="1" v-if="true">
-        
+              <n-collapse-item title="time" name="1">{{
+                item.time
+              }}</n-collapse-item>
+              <n-collapse-item title="errorUid" name="2"
+                >{{ item.errorUid }}
+              </n-collapse-item>
+              <n-collapse-item title="message" name="3">
+                {{ item.message }}</n-collapse-item
+              >
+              <n-collapse-item title="status" name="4"
+                >{{ item.status }}
+              </n-collapse-item>
+              <n-collapse-item title="statusText" name="5"
+                >{{ item.statusText }}
+              </n-collapse-item>
+              <n-collapse-item title="response" name="6">{{
+                item.response
+              }}</n-collapse-item>
+            </n-collapse>
+          </n-collapse-item>
+        </n-collapse>
+      </div>
+    </n-collapse-item>
+  </n-collapse>
+  <n-collapse class="errorlist">
+    <n-collapse-item title="CorsError" name="1">
+      <div v-for="(item, index) of errors.corsError" :key="index">
+        <n-collapse>
+          <n-collapse-item title="CorsError" name="index">
+            <n-collapse>
+              <n-collapse-item title="time" name="1">{{
+                item.time
+              }}</n-collapse-item>
+              <n-collapse-item title="errorUid" name="2"
+                >{{ item.errorUid }}
+              </n-collapse-item>
+              <n-collapse-item title="message" name="3">
+                {{ item.message }}</n-collapse-item
+              >
+              <n-collapse-item title="tagName" name="4"
+                >{{ item.tagName }}
               </n-collapse-item>
             </n-collapse>
-        </n-collapse-item>
-        <n-collapse-item title="breadcrumbs" name="6">
-          <div>待定</div>
-        </n-collapse-item>
-      </n-collapse>
+          </n-collapse-item>
+        </n-collapse>
+      </div>
     </n-collapse-item>
-  </n-collapse> -->
+  </n-collapse>
 </template>
 
 <style>
-.n-collapse {
+.errorlist {
   max-width: 250px;
   /* background-color: red; */
+  float: left;
 }
 </style>

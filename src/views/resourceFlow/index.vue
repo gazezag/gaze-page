@@ -5,35 +5,56 @@
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
 import { init } from 'echarts';
-import { useStore } from 'store/resourceFlow';
-import { storeToRefs } from 'pinia';
-// ResourceFlow数据对象
-const { ResourceFlow } = storeToRefs(useStore());
+import { useResourceFlowStore } from 'store/webPerformance';
+import Mock from 'mockjs';
 
-const startTime_data = [];
-const responseEnd_data = [];
-const DNS_data = [];
-const initialConnect_data = [];
-const SSL_data = [];
-const request_data = [];
-const TTFB_data = [];
-const transmit_data = [];
-const contentDownload_data = [];
+var startTime_data = new Array();
+var responseEnd_data = new Array();
+var DNS_data = new Array();
+var initialConnect_data = new Array();
+var SSL_data = new Array();
+var request_data = new Array();
+var TTFB_data = new Array();
+var transmit_data = new Array();
+var contentDownload_data = new Array();
 
-// for (const i = 0; i < ResourceFlow.value.length; i++) {
-//   startTime_data.push(ResourceFlow.value[i].startTime);
-//   responseEnd_data.push(ResourceFlow.value[i].responseEnd);
-//   DNS_data.push(ResourceFlow.value[i].DNS);
-//   initialConnect_data.push(ResourceFlow.value[i].initialConnect);
-//   SSL_data.push(ResourceFlow.value[i].SSL);
-//   request_data.push(ResourceFlow.value[i].request);
-//   TTFB_data.push(ResourceFlow.value[i].TTFB);
-//   transmit_data.push(ResourceFlow.value[i].transmit);
-//   contentDownload_data.push(ResourceFlow.value[i].contentDownload);
-// }
-
+const newstore = useResourceFlowStore();
+// mock_test start
+for (var i = 0; i < 5; i++) {
+  var obj = Mock.mock({
+    time: '@float(60, 100, 3, 5)',
+    groupId: '@float(60, 100, 3, 5)',
+    name: '@character',
+    transferSize: '@float(60, 100, 3, 5)',
+    initiatorType: '@character',
+    startTime: '@float(60, 100, 3, 5)',
+    responseEnd: '@float(60, 100, 3, 5)',
+    DNS: '@float(60, 100, 3, 5)',
+    initialConnect: '@float(60, 100, 3, 5)',
+    SSL: '@float(60, 100, 3, 5)',
+    request: '@float(60, 100, 3, 5)',
+    TTFB: '@float(60, 100, 3, 5)',
+    transmit: '@float(60, 100, 3, 5)',
+    contentDownload: '@float(60, 100, 3, 5)'
+  });
+  newstore.push(obj);
+}
+// mock_test over
+const resourceFlowList = newstore.resourceFlowList;
+for (var i = 0; i < resourceFlowList.length; i++) {
+  startTime_data.push(resourceFlowList[i].startTime);
+  responseEnd_data.push(resourceFlowList[i].responseEnd);
+  DNS_data.push(resourceFlowList[i].DNS);
+  initialConnect_data.push(resourceFlowList[i].initialConnect);
+  SSL_data.push(resourceFlowList[i].SSL);
+  request_data.push(resourceFlowList[i].request);
+  TTFB_data.push(resourceFlowList[i].TTFB);
+  transmit_data.push(resourceFlowList[i].transmit);
+  contentDownload_data.push(resourceFlowList[i].contentDownload);
+}
+console.log(resourceFlowList);
 //y轴名称（要根据资源个数来确定）
-const yAxis_name = [
+var yAxis_name = [
   'resource1',
   'resource2',
   'resource3',
