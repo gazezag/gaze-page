@@ -1,47 +1,42 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
-  { path: '/', redirect: '/layout' },
+  { path: '/', redirect: '/overview' },
+  {
+    path: '/overview',
+    name: 'Overview',
+    component: () => import('views/overview/index.vue')
+  },
   {
     path: '/layout',
-    name: 'layout',
+    name: 'Layout',
     component: () => import('components/layout/index.vue'),
     children: [
-      { path: '/layout', redirect: '/overview' },
+      { path: '', redirect: '/performance-timing' },
       {
-        path: '/overview',
-        name: 'overView',
-        component: () => import('views/overView/index.vue')
+        path: '/performance-timing',
+        name: 'PerformanceTiming',
+        component: () => import('views/performanceTiming/index.vue')
       },
       {
-        path: '/home',
-        name: 'Home',
-        component: () => import('views/Counter/index.vue')
-      },
-      {
-        path: '/resourseFlow',
-        name: 'ResourseFlow',
-        component: () => import('views/resourceFlow/index.vue')
-      },
-      {
-        path: '/navigationTiming',
+        path: '/navigation-timing',
         name: 'NavigationTiming',
         component: () => import('views/navigationTiming/index.vue')
       },
       {
-        path: '/performanceCard',
-        name: 'PerformanceCard',
-        component: () => import('views/performanceCard/index.vue')
+        path: '/resource-flow',
+        name: 'ResourseFlow',
+        component: () => import('views/resourceFlow/index.vue')
       },
       {
-        path: '/errorInformation',
-        name: 'errorInformation',
-        component: () => import('views/errorInformation/index.vue')
+        path: '/user-behavior',
+        name: 'UserBehavior',
+        component: () => import('views/userBehavior/index.vue')
       },
       {
-        path: '/uerAction',
-        name: 'uerAction',
-        component: () => import('views/userAction/index.vue')
+        path: '/error-info',
+        name: 'ErrorInfo',
+        component: () => import('views/errorInfo/index.vue')
       }
     ]
   }
