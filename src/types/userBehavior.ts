@@ -37,7 +37,7 @@ export interface OperationInfo {
 }
 
 export interface UserBehavior {
-  routerChange: Array<RouterChangeInfo>;
-  http: Array<HttpInfo>;
-  operation: Array<OperationInfo>;
+  routerChange: Array<Array<RouterChangeInfo>>;
+  http: Array<Array<HttpInfo>>;
+  operation: Array<Array<OperationInfo>>;
 }
