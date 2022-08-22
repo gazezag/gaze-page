@@ -43,8 +43,6 @@ export const init = () => {
 
 const sourceEventHandler = (push: (item: any) => void) => {
   return (e: MessageEvent<string>) => {
-    console.log(e.data);
-
     push(JSON.parse(e.data));
   };
 };

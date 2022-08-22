@@ -3,15 +3,8 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  nextTick,
-  onMounted,
-  onUnmounted,
-  ref,
-  watch
-} from 'vue';
-import { EChartsType, EChartOption, init } from 'echarts';
+import { defineComponent, nextTick, onMounted, onUnmounted, watch } from 'vue';
+import { EChartOption, init } from 'echarts';
 import { debounce } from 'utils/functional';
 
 export default defineComponent({
@@ -48,13 +41,15 @@ export default defineComponent({
     axisPointer: Object,
     brush: Object,
     calendar: Object,
-    darkMode: Boolean
+    darkMode: Boolean,
+
+    clickHandler: Function
   },
   setup(props) {
-    const charts = ref<EChartsType>(null as any);
+    let charts = null as any;
 
     const setConfig = () => {
-      charts.value.setOption({
+      charts.setOption({
         title: props.title,
         legend: props.legend,
         grid: props.grid,
@@ -73,8 +68,14 @@ export default defineComponent({
 
     const initChart = () => {
       nextTick(() => {
-        charts.value = init(document.querySelector(`#chart-${props.chartId}`)!);
+        charts = init(document.querySelector(`#chart-${props.chartId}`)!);
+
         setConfig();
+
+        if (props.clickHandler) {
+          charts.off('click');
+          charts.on('click', props.clickHandler);
+        }
       });
     };
 
@@ -83,13 +84,13 @@ export default defineComponent({
       window.addEventListener(
         'resize',
         debounce(() => {
-          charts.value.resize();
+          charts.resize();
         })
       );
     });
 
     onUnmounted(() => {
-      charts.value.dispose();
+      charts.dispose();
     });
 
     watch(props, () => setConfig());

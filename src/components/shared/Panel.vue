@@ -1,10 +1,18 @@
 <template>
-  <n-card :segmented="segmented" bordered hoverable>
-    <template #default>
-      <slot name="title"></slot>
+  <n-card
+    :segmented="segmented"
+    :content-style="contentStyle"
+    bordered
+    hoverable
+  >
+    <template #header>
+      <slot name="header"></slot>
     </template>
-    <template #footer>
-      <slot name="content"></slot>
+    <template #header-extra>
+      <slot name="header-extra"></slot>
+    </template>
+    <template #default>
+      <slot name="default"></slot>
     </template>
   </n-card>
 </template>
@@ -13,12 +21,12 @@
 import { defineComponent } from 'vue';
 
 const segmented = {
-  content: true,
-  footer: 'soft'
+  content: true
 };
 
 export default defineComponent({
   name: 'Panel',
+  props: ['contentStyle'],
   setup() {
     return {
       segmented
@@ -26,3 +34,9 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+.n-card {
+  border-radius: 20px;
+}
+</style>

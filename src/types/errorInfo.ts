@@ -36,11 +36,13 @@ export interface CorsErrorInfo extends BasicErrorInfo {
 }
 
 export interface ErrorInfo {
-  jsError: Array<{
-    info: JsErrorInfo;
-    stackTrace: Array<StackTraceInfo>;
-  }>;
-  resourceError: Array<ResourceErrorInfo>;
-  httpError: Array<HttpErrorInfo>;
-  corsError: Array<CorsErrorInfo>;
+  jsError: Array<
+    Array<{
+      info: JsErrorInfo;
+      stackTrace: Array<StackTraceInfo>;
+    }>
+  >;
+  resourceError: Array<Array<ResourceErrorInfo>>;
+  httpError: Array<Array<HttpErrorInfo>>;
+  corsError: Array<Array<CorsErrorInfo>>;
 }
