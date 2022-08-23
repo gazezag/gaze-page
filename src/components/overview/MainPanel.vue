@@ -1,6 +1,6 @@
 <template>
   <n-space justify="space-around" size="large">
-    <Panel>
+    <Panel :floatShadow="true">
       <template #header> PAGE VIEW </template>
       <template #default>
         <Chart
@@ -16,7 +16,7 @@
       </template>
     </Panel>
 
-    <Panel>
+    <Panel :floatShadow="true">
       <template #header> REFERER </template>
       <template #default>
         <Chart
@@ -39,9 +39,9 @@ import Panel from 'components/shared/Panel.vue';
 import { useVisitInfoStore } from 'store/visitInfo';
 import { storeToRefs } from 'pinia';
 import {
-  getWeekDayIntervalByLabel,
-  getWeekDaysLabel,
-  getWeekIdxByLabel
+  getCurrentIntervalIdx,
+  getWeekDays,
+  getWeekDaysLabel
 } from 'utils/time';
 import router from 'router/routes';
 import { useGlobal } from 'store/globalOption';
@@ -112,16 +112,17 @@ export default defineComponent({
     });
 
     const { setBegin, setEnd, setWeekDay } = useGlobal();
-    const clickHandler = (params: any) => {
-      const label = params.name;
-      const [begin, end] = getWeekDayIntervalByLabel(label);
-      const weekDay = getWeekIdxByLabel(label);
+    const clickHandler = (param: any) => {
+      const idx = typeof param === 'number' ? param : param.dataIndex;
+      if (idx <= getCurrentIntervalIdx()) {
+        const weekDays = getWeekDays();
 
-      setBegin(begin);
-      setEnd(end);
-      setWeekDay(weekDay);
+        setBegin(weekDays[idx]);
+        setEnd(weekDays[idx + 1]);
+        setWeekDay(idx as number);
 
-      router.push('/layout');
+        router.push('/layout');
+      }
     };
 
     return {

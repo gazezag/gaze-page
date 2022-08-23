@@ -1,16 +1,23 @@
 <template>
-  <Chart
-    chartId="resource-flow"
-    :width="'800px'"
-    :height="'500px'"
-    :title="resourceFlowChartOption.title"
-    :tooltip="resourceFlowChartOption.tooltip"
-    :legend="resourceFlowChartOption.legend"
-    :grid="resourceFlowChartOption.grid"
-    :yAxis="resourceFlowChartOption.yAxis"
-    :xAxis="resourceFlowChartXAxis"
-    :series="resourceFlowChartSeries"
-  />
+  <n-space justify="center">
+    <Panel>
+      <template #header>RESOURCE FLOW</template>
+      <template #default>
+        <Chart
+          chartId="resource-flow"
+          :width="'1200px'"
+          :height="'600px'"
+          :title="resourceFlowChartOption.title"
+          :tooltip="resourceFlowChartOption.tooltip"
+          :legend="resourceFlowChartOption.legend"
+          :grid="resourceFlowChartOption.grid"
+          :yAxis="resourceFlowChartOption.yAxis"
+          :xAxis="resourceFlowChartXAxis"
+          :series="resourceFlowChartSeries"
+        />
+      </template>
+    </Panel>
+  </n-space>
 </template>
 
 <script lang="ts">
@@ -21,17 +28,17 @@ import { useResourceFlowStore } from 'store/webPerformance';
 
 const resourceFlowChartOption = {
   title: {
-    text: '(ms)',
-    padding: 20,
-    textStyle: {
-      fontSize: 17,
-      fontWeight: 'bolder',
-      color: '#333'
-    },
-    subtextStyle: {
-      fontSize: 13,
-      fontWeight: 'bolder'
-    }
+    // text: '(ms)',
+    // padding: 20,
+    // textStyle: {
+    //   fontSize: 17,
+    //   fontWeight: 'bolder',
+    //   color: '#333'
+    // },
+    // subtextStyle: {
+    //   fontSize: 13,
+    //   fontWeight: 'bolder'
+    // }
   },
   tooltip: {
     trigger: 'axis',
@@ -39,7 +46,10 @@ const resourceFlowChartOption = {
       type: 'shadow'
     }
   },
-  legend: {},
+  legend: {
+    // orient: 'vertical',
+    // left: 'left'
+  },
   grid: {
     left: '3%',
     right: '4%',
@@ -89,3 +99,9 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+.n-space {
+  padding: 20px;
+}
+</style>

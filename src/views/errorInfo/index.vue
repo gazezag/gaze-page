@@ -212,34 +212,43 @@
   </div>
 
   <div v-else>
-    <n-empty description="Your program is very healthy">
-      <template #icon>
-        <n-icon>
-          <HappyOutline />
-        </n-icon>
-      </template>
-      <template #extra>
-        <n-button size="large"> NICE! </n-button>
-      </template>
-    </n-empty>
+    <n-space style="margin-top: 100px" justify="center">
+      <Panel>
+        <template #header>WOW!!</template>
+        <template #default>
+          <n-empty size="huge" description="Your program is very healthy">
+            <template #icon>
+              <n-icon>
+                <HappyOutline />
+              </n-icon>
+            </template>
+            <template #extra>
+              <n-button @click="showNice" size="large"> NICE! </n-button>
+            </template>
+          </n-empty>
+        </template>
+      </Panel>
+    </n-space>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, h, ref } from 'vue';
 import { storeToRefs } from 'pinia';
+import { NIcon, useMessage } from 'naive-ui';
 import Panel from 'components/shared/Panel.vue';
 import SimpleTable from 'components/shared/SimpleTable.vue';
 import { timeFormatter } from 'utils/time';
 import { getKeys, getValueList } from 'utils/objectHandler';
 import { useErrorInfoStore } from 'store/errorInfo';
 import { StackTraceInfo } from 'types/errorInfo';
-import { HappyOutline } from '@vicons/ionicons5';
+import { BalloonOutline, HappyOutline } from '@vicons/ionicons5';
 
 export default defineComponent({
   name: 'UserBehavior',
   components: { Panel, SimpleTable, HappyOutline },
   setup() {
+    const message = useMessage();
     const {
       isErrorOccur,
       jsErrorSelected,
@@ -251,6 +260,13 @@ export default defineComponent({
       corsErrorSelected,
       corsErrorSelectedCount
     } = storeToRefs(useErrorInfoStore());
+
+    const showNice = () => {
+      message.destroyAll();
+      message.success('NICE NICE !!!!!!!!!!!!!!', {
+        icon: () => h(NIcon, null, { default: () => h(BalloonOutline) })
+      });
+    };
 
     const isStackTraceModalShow = ref<boolean>(false);
     const dataTobeShow = ref<Array<StackTraceInfo>>([]);
@@ -269,6 +285,8 @@ export default defineComponent({
       isStackTraceModalShow,
       dataTobeShow,
       showModal,
+
+      showNice,
 
       jsErrorSelected,
       jsErrorSelectedCount,
@@ -290,5 +308,10 @@ export default defineComponent({
 
 .n-card {
   margin-top: 20px;
+}
+
+.n-empty {
+  width: 400px;
+  height: 200px;
 }
 </style>

@@ -1,15 +1,25 @@
 <template>
-  <Chart
-    chartId="navigation-timing"
-    :height="'600px'"
-    :title="navigationTimingChartTitle"
-    :series="navigationTimingChartSeries"
-  />
+  <n-space justify="center">
+    <Panel>
+      <template #header>NAVIGATION TIMING</template>
+      <template #default>
+        <Chart
+          chartId="navigation-timing"
+          :width="'1200px'"
+          :height="'600px'"
+          :title="navigationTimingChartTitle"
+          :legend="navigationTimingChartLegend"
+          :series="navigationTimingChartSeries"
+        />
+      </template>
+    </Panel>
+  </n-space>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
 import Chart from 'components/chart/index.vue';
+import Panel from 'components/shared/Panel.vue';
 import { storeToRefs } from 'pinia';
 import { useNavigationTimingStore } from 'store/webPerformance';
 
@@ -17,13 +27,20 @@ const formatter = (param: any) => {
   return '{icon|●}{name|' + param.name + '}\n{value|' + param.value + '}';
 };
 
+const navigationTimingChartLegend = {
+  orient: 'vertical',
+  left: 'left'
+};
+
 export default defineComponent({
   name: 'NavigationTiming',
-  components: { Chart },
+  components: { Chart, Panel },
   setup() {
     const { dayAverage, totalAverageNavigationTiming } = storeToRefs(
       useNavigationTimingStore()
     );
+
+    console.log(dayAverage.value);
 
     const navigationTimingChartTitle = computed(() => {
       return {
@@ -75,10 +92,15 @@ export default defineComponent({
 
     return {
       navigationTimingChartTitle,
+      navigationTimingChartLegend,
       navigationTimingChartSeries
     };
   }
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.n-space {
+  padding: 20px;
+}
+</style>

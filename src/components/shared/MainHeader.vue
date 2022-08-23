@@ -6,15 +6,26 @@
         <span>Front-end monitor</span>
       </div>
     </router-link>
+
     <n-space>
+      <n-popselect
+        :options="alertInfoList"
+        :render-label="renderLabelHandler"
+        size="large"
+        scrollable
+        virtual-scroll
+      >
+        <n-badge :value="total">
+          <n-icon :size="20">
+            <Alert28Regular />
+          </n-icon>
+        </n-badge>
+      </n-popselect>
+
       <a href="https://github.com/gazezag">GitHub</a>
       <router-link to="/">DOCS</router-link>
       <router-link to="/">HELP</router-link>
-      <router-link to="/">
-        <n-icon :size="20">
-          <Alert28Regular />
-        </n-icon>
-      </router-link>
+
       <router-link to="/">
         <n-icon :size="20" class="person">
           <Person12Filled />
@@ -25,11 +36,53 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent, h } from 'vue';
+import { storeToRefs } from 'pinia';
+import { NSpace, NIcon, NText } from 'naive-ui';
 import { Alert28Regular, Person12Filled } from '@vicons/fluent';
+import { useErrorInfoStore } from 'store/errorInfo';
+import { timeFormatter } from 'utils/time';
+import { has } from 'utils/objectHandler';
+import { WarningOutline } from '@vicons/ionicons5';
+
+const renderLabelHandler = (option: { label: string; value: number }) => {
+  return h(
+    NSpace,
+    { justify: 'space-around', style: { 'border-bottom': '1px solid #ccc' } },
+    [
+      h(NIcon, { size: 30, component: WarningOutline, color: '#c03f53' }),
+      h(NText, { strong: true }, option.label)
+    ]
+  );
+};
+
 export default defineComponent({
   name: 'MainHeader',
-  components: { Alert28Regular, Person12Filled }
+  components: { Alert28Regular, Person12Filled },
+  setup() {
+    const { flatedList, total } = storeToRefs(useErrorInfoStore());
+
+    console.log(flatedList.value);
+
+    const alertInfoList = computed(() => {
+      return flatedList.value.map(errorInfo => {
+        const time = has(errorInfo, 'info')
+          ? errorInfo.info.time
+          : errorInfo.time;
+
+        return {
+          label: `${timeFormatter(time)}`,
+          value: time
+        };
+      });
+    });
+
+    return {
+      renderLabelHandler,
+      alertInfoList,
+      total
+    };
+  }
 });
 </script>
 
@@ -40,6 +93,7 @@ export default defineComponent({
   padding: 0 30px;
   height: 60px;
   justify-content: space-between;
+  border-bottom: 1px solid #e8e8eb;
 
   a {
     text-decoration: none;
@@ -87,7 +141,7 @@ export default defineComponent({
     span {
       margin-left: 10px;
       // background-color: rgb(182, 144, 144);
-      color: rgb(139, 114, 92);
+      color: rgba(73, 63, 145, 0.6);
     }
   }
 }
