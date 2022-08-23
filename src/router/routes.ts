@@ -11,6 +11,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/layout',
     name: 'Layout',
     component: () => import('components/layout/index.vue'),
+    beforeEnter: () => {
+      if (localStorage.getItem('weekDay')) {
+        return true;
+      }
+      return false;
+    },
     children: [
       { path: '', redirect: '/performance-timing' },
       {
