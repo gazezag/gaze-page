@@ -94,7 +94,6 @@ export const useNavigationTimingStore = defineStore('navigationTiming', () => {
 
   const dayAverage = computed(() => {
     const { weekDay } = storeToRefs(useGlobal());
-    console.log(navigationTimingList.value[weekDay.value]);
 
     const averageObj = getObjectListAverage(
       navigationTimingList.value[weekDay.value]

@@ -7,6 +7,7 @@ import {
   ResourceErrorInfo,
   StackTraceInfo
 } from 'types/errorInfo';
+import { getValueList } from 'utils/objectHandler';
 import { pushStore } from 'utils/storeHandler';
 import { getWeekDayEnd, getWeekDays } from 'utils/time';
 import { computed, reactive } from 'vue';
@@ -108,6 +109,13 @@ export const useErrorInfoStore = defineStore('errorInfo', () => {
     return corsErrorSelected.value.length;
   });
 
+  const flatedList = computed(() => {
+    return getValueList(errorInfo).flat(Infinity);
+  });
+  const total = computed(() => {
+    return flatedList.value.length;
+  });
+
   const pushJsErrorInfo = (item: JsErrorInfo) => {
     const weekDays = getWeekDays();
     const itemObj = { info: item, stackTrace: [] };
@@ -163,6 +171,9 @@ export const useErrorInfoStore = defineStore('errorInfo', () => {
     httpErrorSelectedCount,
     corsErrorSelected,
     corsErrorSelectedCount,
+
+    flatedList,
+    total,
 
     pushJsErrorInfo,
     pushStackTraceInfo,
