@@ -74,7 +74,17 @@ export default defineComponent({
 
         if (props.clickHandler) {
           charts.off('click');
-          charts.on('click', props.clickHandler);
+
+          charts.getZr().on('click', (param: any) => {
+            const pointPixel = [param.offsetX, param.offsetY];
+            if (charts.containPixel('grid', pointPixel)) {
+              const xIdx = charts.convertFromPixel(
+                { seriesIndex: 0 },
+                pointPixel
+              )[0];
+              props.clickHandler!(xIdx);
+            }
+          });
         }
       });
     };
