@@ -5,7 +5,7 @@
     </template>
     <n-number-animation :from="from" :to="to" :on-finish="finishHandler" />
     <template #suffix>
-      <n-icon :color="color" :component="trendIcon" />
+      <n-icon v-show="to" :color="color" :component="trendIcon" />
     </template>
   </n-statistic>
 </template>
