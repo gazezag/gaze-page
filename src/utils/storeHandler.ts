@@ -15,6 +15,8 @@ export const pushStore = (arr: Array<any>, item: any) => {
       }
 
       break;
+    } else {
+      arr[i] = [];
     }
   }
 };

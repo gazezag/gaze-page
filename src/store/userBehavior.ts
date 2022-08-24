@@ -19,8 +19,10 @@ export const useUserBehaviorStore = defineStore('userBehavior', () => {
 
   const routerChangeSelected = computed(() => {
     const { weekDay } = useGlobal();
+    const selected = userBehaviorInfo.routerChange[weekDay];
+    if (!selected) return [];
 
-    return userBehaviorInfo.routerChange[weekDay].map(item => {
+    return selected.map(item => {
       const { time, method, href, hash, pathname } = item;
       const res = { time, method, href };
 
@@ -36,7 +38,10 @@ export const useUserBehaviorStore = defineStore('userBehavior', () => {
 
   const httpSelected = computed(() => {
     const { weekDay } = useGlobal();
-    return userBehaviorInfo.http[weekDay].map(item => {
+    const selected = userBehaviorInfo.http[weekDay];
+    if (!selected) return [];
+
+    return selected.map(item => {
       const {
         time,
         method,
@@ -67,7 +72,10 @@ export const useUserBehaviorStore = defineStore('userBehavior', () => {
 
   const operationSelected = computed(() => {
     const { weekDay } = useGlobal();
-    return userBehaviorInfo.operation[weekDay].map(item => {
+    const selected = userBehaviorInfo.operation[weekDay];
+    if (!selected) return [];
+
+    return selected.map(item => {
       const {
         time,
         page,

@@ -32,8 +32,10 @@ export const useErrorInfoStore = defineStore('errorInfo', () => {
 
   const jsErrorSelected = computed(() => {
     const { weekDay } = useGlobal();
+    const selected = errorInfo.jsError[weekDay];
+    if (!selected) return [];
 
-    return errorInfo.jsError[weekDay].map(item => {
+    return selected.map(item => {
       const { time, message, errorType, reason } = item.info;
       return {
         time,
@@ -58,8 +60,10 @@ export const useErrorInfoStore = defineStore('errorInfo', () => {
 
   const resourceErrorSelected = computed(() => {
     const { weekDay } = useGlobal();
+    const selected = errorInfo.resourceError[weekDay];
+    if (!selected) return [];
 
-    return errorInfo.resourceError[weekDay].map(item => {
+    return selected.map(item => {
       const { time, message, errorType, src, outerHtml, tagName } = item;
       return {
         time,
@@ -77,8 +81,10 @@ export const useErrorInfoStore = defineStore('errorInfo', () => {
 
   const httpErrorSelected = computed(() => {
     const { weekDay } = useGlobal();
+    const selected = errorInfo.httpError[weekDay];
+    if (!selected) return [];
 
-    return errorInfo.httpError[weekDay].map(item => {
+    return selected.map(item => {
       const { time, status, statusText, message, response } = item;
       return {
         time,
@@ -95,8 +101,10 @@ export const useErrorInfoStore = defineStore('errorInfo', () => {
 
   const corsErrorSelected = computed(() => {
     const { weekDay } = useGlobal();
+    const selected = errorInfo.corsError[weekDay];
+    if (!selected) return [];
 
-    return errorInfo.corsError[weekDay].map(item => {
+    return selected.map(item => {
       const { time, message, tagName } = item;
       return {
         time,
@@ -131,6 +139,8 @@ export const useErrorInfoStore = defineStore('errorInfo', () => {
         }
 
         break;
+      } else {
+        errorInfo.jsError[i] = [];
       }
     }
   };

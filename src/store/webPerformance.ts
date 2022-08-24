@@ -165,6 +165,8 @@ export const useResourceFlowStore = defineStore('resourceFlow', () => {
   });
 
   const averageList = computed(() => {
+    console.log(calculatedObj.value);
+
     return mergeObjectList(getValueList(calculatedObj.value));
   });
 
@@ -183,6 +185,8 @@ export const useResourceFlowStore = defineStore('resourceFlow', () => {
 });
 
 const getObjectListAverage = (objList: Array<any>): any => {
+  console.log(objList);
+
   return getKeys(objList[0])
     .filter(k => typeof get(objList[0], k) === 'number')
     .reduce((r, k) => {
