@@ -5,7 +5,7 @@
         {{ dataRef }}
         {{ unit }}
       </span>
-      <n-icon :component="icon" :size="30" />
+      <n-icon v-show="dataRef" :component="icon" :size="30" />
     </n-space>
   </n-text>
 </template>

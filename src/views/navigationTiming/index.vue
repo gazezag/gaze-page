@@ -40,8 +40,6 @@ export default defineComponent({
       useNavigationTimingStore()
     );
 
-    console.log(dayAverage.value);
-
     const navigationTimingChartTitle = computed(() => {
       return {
         text: `Total\n${totalAverageNavigationTiming.value}`,

@@ -62,8 +62,6 @@ export default defineComponent({
   setup() {
     const { flatedList, total } = storeToRefs(useErrorInfoStore());
 
-    console.log(flatedList.value);
-
     const alertInfoList = computed(() => {
       return flatedList.value.map(errorInfo => {
         const time = has(errorInfo, 'info')
