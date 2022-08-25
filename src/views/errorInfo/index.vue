@@ -31,21 +31,15 @@
                       <tbody>
                         <tr>
                           <td
-                            v-for="(item, i) in getValueList(info).slice(
-                              1,
-                              jsErrorSelectedCount
-                            )"
+                            v-for="(item, i) in getValueList(info).slice(1, -1)"
                             :key="i"
                           >
-                            {{ item }}
+                            {{ item || '/' }}
                           </td>
                           <td>
                             <n-button
                               @click="
-                                () =>
-                                  showModal(
-                                    getValueList(info)[jsErrorSelectedCount]
-                                  )
+                                () => showModal(getValueList(info).at(-1))
                               "
                               >View</n-button
                             >
@@ -260,6 +254,8 @@ export default defineComponent({
       corsErrorSelected,
       corsErrorSelectedCount
     } = storeToRefs(useErrorInfoStore());
+
+    console.log(jsErrorSelected.value);
 
     const showNice = () => {
       message.destroyAll();

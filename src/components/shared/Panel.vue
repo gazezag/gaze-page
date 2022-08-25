@@ -34,7 +34,7 @@ export default defineComponent({
   name: 'Panel',
   props: ['floatShadow', 'contentStyle'],
   setup() {
-    const domId = `Panel${Date.now()}`;
+    const domId = `Panel-${Date.now()}`;
     const isHover = ref<boolean>(false);
 
     onMounted(() => {

@@ -2,7 +2,7 @@ import { defineStore, storeToRefs } from 'pinia';
 import { NavigationTiming } from 'types/navigationTiming';
 import { PerformanceTiming } from 'types/performanceTiming';
 import { ResourceFlowInfo } from 'types/resourceFlow';
-import { getAverage } from 'utils/math';
+import { getAverage, roundOff } from 'utils/math';
 import {
   get,
   getKeys,
@@ -110,9 +110,11 @@ export const useNavigationTimingStore = defineStore('navigationTiming', () => {
   });
 
   const totalAverageNavigationTiming = computed(() => {
-    return dayAverage.value.reduce((total, item) => {
-      return item.type === 'time' ? total : total + item.value;
-    }, 0);
+    return roundOff(
+      dayAverage.value.reduce((total, item) => {
+        return item.type === 'time' ? total : total + item.value;
+      }, 0)
+    );
   });
 
   const push = (item: NavigationTiming) => {
@@ -165,8 +167,6 @@ export const useResourceFlowStore = defineStore('resourceFlow', () => {
   });
 
   const averageList = computed(() => {
-    console.log(calculatedObj.value);
-
     return mergeObjectList(getValueList(calculatedObj.value));
   });
 
