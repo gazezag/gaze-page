@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, onMounted, onUnmounted, watch } from 'vue';
+import { defineComponent, onMounted, onUnmounted, watch } from 'vue';
 import { EChartOption, init } from 'echarts';
 import { debounce } from 'utils/functional';
 

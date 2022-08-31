@@ -1,4 +1,3 @@
-import { has } from './objectHandler';
 import { getIntervalIdx } from './time';
 
 export const pushStore = <T extends { time: number }>(

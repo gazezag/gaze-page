@@ -13,7 +13,7 @@ import { Dataset } from 'types/dataset';
 import { fetchAll } from 'api/firstFetch';
 import { initStore } from 'store/initStore';
 import { useGlobal } from 'store/globalOption';
-import { getWeekDayEnd, getWeekDays, getWeekDayStart } from 'utils/time';
+import { getWeekDayEnd, getWeekDayStart } from 'utils/time';
 
 export default defineComponent({
   name: 'App',

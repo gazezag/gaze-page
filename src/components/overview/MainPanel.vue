@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive } from 'vue';
+import { computed, defineComponent } from 'vue';
 import Chart from 'components/chart/index.vue';
 import Panel from 'components/shared/Panel.vue';
 import { useVisitInfoStore } from 'store/visitInfo';
