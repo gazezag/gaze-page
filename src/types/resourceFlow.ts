@@ -6,11 +6,11 @@ export interface ResourceFlowInfo {
   initiatorType: 'script' | 'img' | 'other';
   startTime: number;
   responseEnd: number;
-  DNS: number;
+  dns: number;
   initialConnect: number;
-  SSL: number;
+  ssl: number;
   request: number;
-  TTFB: number;
+  ttfb: number;
   transmit: number;
   contentDownload: number;
 }

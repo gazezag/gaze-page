@@ -68,13 +68,12 @@ export const getTime = (timestamp: number) => {
   }`;
 };
 
-export const getCurrentIntervalIdx = () => {
+export const getIntervalIdx = (time: number) => {
   const weekDays = getWeekDays();
-  const now = getNow();
   let idx = -1;
 
-  weekDays.some((time, i) => {
-    if (now >= time && now <= weekDays[i + 1]) {
+  weekDays.some((weekTime, i) => {
+    if (time >= weekTime && time < weekDays[i + 1]) {
       idx = i;
       return true;
     }
@@ -82,6 +81,10 @@ export const getCurrentIntervalIdx = () => {
   });
 
   return idx;
+};
+
+export const getCurrentIntervalIdx = () => {
+  return getIntervalIdx(Date.now());
 };
 
 export const timeFormatter = (time: number): string => {

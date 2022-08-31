@@ -13,8 +13,10 @@
           :grid="resourceFlowChartOption.grid"
           :yAxis="resourceFlowChartOption.yAxis"
           :xAxis="resourceFlowChartXAxis"
-          :series="resourceFlowChartSeries"
+          :series="series"
+          :dataset="dataset"
         />
+        <!-- :series="resourceFlowChartSeries" -->
       </template>
     </Panel>
   </n-space>
@@ -61,11 +63,25 @@ const resourceFlowChartOption = {
   }
 };
 
+const keyList = [
+  'startTime',
+  'responseEnd',
+  'dns',
+  'initialConnect',
+  'ssl',
+  'request',
+  'ttfb',
+  'transmit',
+  'contentDownload'
+];
+
 export default defineComponent({
   name: 'ResourceFlow',
   components: { Chart },
   setup() {
     const { averageList, typeList } = storeToRefs(useResourceFlowStore());
+
+    console.log(typeList.value);
 
     const resourceFlowChartXAxis = computed(() => {
       return {
@@ -74,27 +90,29 @@ export default defineComponent({
       };
     });
 
-    const resourceFlowChartSeries = computed(() => {
-      return averageList.value
-        .filter(
-          item => ['groupId', 'time', 'transferSize'].indexOf(item.name) === -1
-        )
-        .map(item => {
-          return {
-            name: item.name,
-            data: item.data,
-            type: 'bar',
-            stack: 'flow',
-            color: item.name === 'startTime' && 'rgba(255,255,255,0)'
-          };
-        });
+    const dataset = computed(() => {
+      return {
+        dimensions: ['initiatorType', ...keyList],
+        source: averageList.value
+      };
+    });
+
+    const series = computed(() => {
+      return keyList.map(item => {
+        return {
+          type: 'bar',
+          stack: 'flow',
+          color: item === 'startTime' && 'rgba(255,255,255,0)'
+        };
+      });
     });
 
     return {
       resourceFlowChartOption,
-
       resourceFlowChartXAxis,
-      resourceFlowChartSeries
+
+      dataset,
+      series
     };
   }
 });

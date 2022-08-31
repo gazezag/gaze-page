@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { VisitInfo } from 'types/visitInfo';
+import { pushStore } from 'utils/storeHandler';
 import { getCurrentIntervalIdx, getWeekDays } from 'utils/time';
 import { computed, ref } from 'vue';
 
@@ -24,13 +25,24 @@ export const useVisitInfoStore = defineStore('visitInfo', () => {
   });
 
   const pvTotal = computed(() => {
-    return visitInfoList.value.reduce((total, curList) => {
-      if (curList) {
-        return total + curList.length;
-      }
+    // TODO
+    let res = 0;
+    console.log(visitInfoList.value);
 
-      return total;
-    }, 0);
+    try {
+      res = visitInfoList.value.reduce((total, curList) => {
+        if (curList) {
+          return total + curList.length;
+        }
+
+        return total;
+      }, 0);
+    } catch (e) {
+      console.log('ERROR');
+      console.log(visitInfoList.value);
+    }
+
+    return res;
   });
 
   const originRatio = computed(() => {
@@ -55,17 +67,19 @@ export const useVisitInfoStore = defineStore('visitInfo', () => {
       refererInfoMap.value.set(origin, 0);
     }
 
-    for (let i = 0; i <= 7; i++) {
-      if (item.time > weekDays[i] && item.time < weekDays[i + 1]) {
-        if (!visitInfoList.value[i]) {
-          visitInfoList.value[i] = [item];
-        } else {
-          visitInfoList.value[i].push(item);
-        }
+    pushStore(visitInfoList.value, item);
 
-        break;
-      }
-    }
+    // for (let i = 0; i <= 7; i++) {
+    //   if (item.time > weekDays[i] && item.time < weekDays[i + 1]) {
+    //     if (!visitInfoList.value[i]) {
+    //       visitInfoList.value[i] = [item];
+    //     } else {
+    //       visitInfoList.value[i].push(item);
+    //     }
+
+    //     break;
+    //   }
+    // }
   };
 
   return {

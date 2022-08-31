@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { computed, defineComponent, reactive } from 'vue';
 import Chart from 'components/chart/index.vue';
 import Panel from 'components/shared/Panel.vue';
 import { useVisitInfoStore } from 'store/visitInfo';
@@ -72,7 +72,8 @@ const visitChartOption = {
     }
   },
   yAxis: {
-    type: 'value'
+    type: 'value',
+    minInterval: 1
   }
 };
 
@@ -89,26 +90,31 @@ export default defineComponent({
   components: { Panel, Chart },
   setup() {
     const { pv, pvTotal, originRatio } = storeToRefs(useVisitInfoStore());
-    const visitSeries = reactive({
-      name: 'PV',
-      type: 'line',
-      smooth: true,
-      data: pv
+
+    const visitSeries = computed(() => {
+      return {
+        name: 'PV',
+        type: 'line',
+        smooth: true,
+        data: pv.value
+      };
     });
-    const refererConfig = reactive({
-      title: {
-        text: `Total PV: ${pvTotal.value}`,
-        left: 'center',
-        top: 'center'
-      },
-      series: {
-        type: 'pie',
-        data: originRatio,
-        label: {
-          show: false
+    const refererConfig = computed(() => {
+      return {
+        title: {
+          text: `Total PV: ${pvTotal.value}`,
+          left: 'center',
+          top: 'center'
         },
-        radius: ['40%', '70%']
-      }
+        series: {
+          type: 'pie',
+          data: originRatio.value,
+          label: {
+            show: false
+          },
+          radius: ['40%', '70%']
+        }
+      };
     });
 
     const { setBegin, setEnd, setWeekDay } = useGlobal();

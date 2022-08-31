@@ -22,15 +22,15 @@ const countAverage = (
 ) => {
   return arr
     .filter(item => item)
-    .reduce((average, curTimingList, i) => {
+    .reduce((average, curTimingList) => {
       const subAverage = curTimingList
         .filter(curTiming => curTiming.type === type)
         .map(fpInfo => fpInfo.value)
         .reduce((subAverage, curTiming) => {
-          return i ? getAverage(subAverage, curTiming) : curTiming;
+          return subAverage ? getAverage(subAverage, curTiming) : curTiming;
         }, 0);
 
-      return i ? getAverage(average, subAverage) : subAverage;
+      return average ? getAverage(average, subAverage) : subAverage;
     }, 0);
 };
 
@@ -49,30 +49,41 @@ export const usePerformanceTimingStore = defineStore(
       );
     });
     const dayAverage = computed(() => {
+      // TODO
       const { weekDay } = storeToRefs(useGlobal());
-      const averageObj = performanceTimingList.value[weekDay.value].reduce(
-        (average, item) => {
-          const { type } = item;
-          set(
-            average,
-            type,
-            has(average, type)
-              ? getAverage(get(average, type), item.value)
-              : item.value
-          );
-          return average;
-        },
-        {} as { [type: string]: number }
-      );
+      let res: Array<any> = [];
 
-      return getKeys(averageObj).reduce((averageList, key) => {
-        averageList.push({
-          type: key.toString(),
-          value: get(averageObj, key)
-        });
+      try {
+        const averageObj = performanceTimingList.value[weekDay.value].reduce(
+          (average, item) => {
+            const { type } = item;
+            set(
+              average,
+              type,
+              has(average, type)
+                ? getAverage(get(average, type), item.value)
+                : item.value
+            );
+            return average;
+          },
+          {} as { [type: string]: number }
+        );
 
-        return averageList;
-      }, [] as Array<{ type: string; value: number }>);
+        res = getKeys(averageObj).reduce((averageList, key) => {
+          averageList.push({
+            type: key.toString(),
+            value: get(averageObj, key)
+          });
+
+          return averageList;
+        }, [] as Array<{ type: string; value: number }>);
+      } catch (e) {
+        console.log('Error');
+        console.log(performanceTimingList.value);
+        console.log(weekDay.value);
+      }
+
+      return res;
     });
 
     const push = (item: PerformanceTiming) => {
@@ -93,28 +104,48 @@ export const useNavigationTimingStore = defineStore('navigationTiming', () => {
   const navigationTimingList = ref<Array<Array<NavigationTiming>>>([]);
 
   const dayAverage = computed(() => {
+    // TODO
     const { weekDay } = storeToRefs(useGlobal());
+    let res: Array<any> = [];
 
-    const averageObj = getObjectListAverage(
-      navigationTimingList.value[weekDay.value]
-    );
-
-    return getKeys(averageObj).reduce((averageList, key) => {
-      averageList.push({
-        type: key.toString(),
-        value: get(averageObj, key)
+    try {
+      const averageObj = computed(() => {
+        return getObjectListAverage(navigationTimingList.value[weekDay.value]);
       });
 
-      return averageList;
-    }, [] as Array<{ type: string; value: number }>);
+      res = getKeys(averageObj.value).reduce((averageList, key) => {
+        averageList.push({
+          type: key.toString(),
+          value: get(averageObj.value, key)
+        });
+
+        return averageList;
+      }, [] as Array<{ type: string; value: number }>);
+    } catch (e) {
+      console.log('Error');
+      console.log(navigationTimingList.value);
+      console.log(weekDay.value);
+    }
+
+    return res;
   });
 
   const totalAverageNavigationTiming = computed(() => {
-    return roundOff(
-      dayAverage.value.reduce((total, item) => {
-        return item.type === 'time' ? total : total + item.value;
-      }, 0)
-    );
+    // TODO
+    let res = 0;
+
+    try {
+      res = roundOff(
+        dayAverage.value.reduce((total, item) => {
+          return item.type === 'time' ? total : total + item.value;
+        }, 0)
+      );
+    } catch (e) {
+      console.log('Error');
+      console.log(dayAverage.value);
+    }
+
+    return res;
   });
 
   const push = (item: NavigationTiming) => {
@@ -136,38 +167,71 @@ export const useResourceFlowStore = defineStore('resourceFlow', () => {
     return getValueListFromTwoDimensional(resourceFlowList.value, 'name');
   });
 
-  //! BUG
-  const calculatedObj = computed(() => {
-    const classifiedObj = resourceFlowList.value.reduce(
-      (classifiedObj, flowList) => {
-        if (flowList) {
-          flowList.forEach(item => {
-            const type = item.initiatorType;
-            if (has(classifiedObj, type)) {
-              get(classifiedObj, type).push(item);
-            } else {
-              set(classifiedObj, type, [item]);
-            }
-          });
-        }
+  const classifiedObj = computed(() => {
+    const { weekDay } = storeToRefs(useGlobal());
 
-        return classifiedObj;
-      },
-      {} as { [type: string]: Array<any> }
-    );
+    // TODO
+    let res = {};
+    try {
+      res = resourceFlowList.value[weekDay.value].reduce(
+        (tempObj, curFlowInfo) => {
+          const { initiatorType: type } = curFlowInfo;
+          if (!type) {
+            console.log(`current type: ${type}`);
+            console.log(curFlowInfo);
+            console.log('\n');
+          }
 
-    return getKeys(classifiedObj).reduce((res, k) => {
-      set(res, k, getObjectListAverage(get(classifiedObj, k)));
-      return res;
-    }, {} as { [type: string]: Array<any> });
+          has(tempObj, type) || set(tempObj, type, []);
+          get(tempObj, type).push(curFlowInfo);
+
+          return tempObj;
+        },
+        {} as Record<string, Array<ResourceFlowInfo>>
+      );
+    } catch (e) {
+      console.log('Error');
+      console.log(resourceFlowList.value);
+      console.log(weekDay.value);
+    }
+
+    return res;
   });
 
   const typeList = computed(() => {
-    return getKeys(calculatedObj.value);
+    return getKeys(classifiedObj.value);
   });
 
   const averageList = computed(() => {
-    return mergeObjectList(getValueList(calculatedObj.value));
+    // classify by initiatorType
+    return getValueList(classifiedObj.value)
+      .map(v => getObjectListAverage(v))
+      .map(v => {
+        const {
+          initiatorType,
+          startTime,
+          responseEnd,
+          dns,
+          initialConnect,
+          ssl,
+          request,
+          ttfb,
+          transmit,
+          contentDownload
+        } = v as ResourceFlowInfo;
+        return {
+          initiatorType,
+          startTime,
+          responseEnd,
+          dns,
+          initialConnect,
+          ssl,
+          request,
+          ttfb,
+          transmit,
+          contentDownload
+        };
+      });
   });
 
   const push = (item: ResourceFlowInfo) => {
@@ -184,36 +248,39 @@ export const useResourceFlowStore = defineStore('resourceFlow', () => {
   };
 });
 
-const getObjectListAverage = (objList: Array<any>): any => {
-  console.log(objList);
-
-  return getKeys(objList[0])
-    .filter(k => typeof get(objList[0], k) === 'number')
-    .reduce((r, k) => {
-      set(
-        r,
-        k,
-        objList.reduce((average, o, i) => {
-          const curValue = get(o, k);
-          return i ? getAverage(average, curValue, false) : curValue;
-        }, 0)
-      );
-      return r;
-    }, {} as any);
+const getObjectListAverage = <T extends object>(objList: Array<T>): T => {
+  return getKeys(objList[0]).reduce((res, k) => {
+    set(
+      res,
+      k,
+      objList.reduce((average, o, i) => {
+        const curValue = Reflect.get(o, k);
+        return typeof curValue === 'string'
+          ? curValue
+          : i
+          ? getAverage(average, curValue, false)
+          : curValue;
+      }, 0)
+    );
+    return res;
+  }, {} as T);
 };
 
-const mergeObjectList = (stuffList: Array<any>): Array<any> => {
-  return getKeys(stuffList[0]).reduce((mergedList, k) => {
-    const valueList = stuffList.reduce((values, stuff) => {
-      values.push(get(stuff, k));
-      return values;
-    }, [] as Array<any>);
+//! BUG here
+// const mergeObjectList = (stuffList: Array<any>): Array<any> => {
+//   console.log(stuffList);
 
-    mergedList.push({
-      name: k,
-      data: valueList
-    });
+//   return getKeys(stuffList[0]).reduce((mergedList, k) => {
+//     const valueList = stuffList.reduce((values, stuff) => {
+//       values.push(get(stuff, k));
+//       return values;
+//     }, [] as Array<any>);
 
-    return mergedList;
-  }, [] as Array<any>);
-};
+//     mergedList.push({
+//       name: k,
+//       data: valueList
+//     });
+
+//     return mergedList;
+//   }, [] as Array<any>);
+// };

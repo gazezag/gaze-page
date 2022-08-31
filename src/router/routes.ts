@@ -18,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
       return false;
     },
     children: [
-      { path: '', redirect: '/performance-timing' },
+      { path: '', name: 'redirect', redirect: '/performance-timing' },
       {
         path: '/performance-timing',
         name: 'PerformanceTiming',

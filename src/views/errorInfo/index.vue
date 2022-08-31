@@ -255,8 +255,6 @@ export default defineComponent({
       corsErrorSelectedCount
     } = storeToRefs(useErrorInfoStore());
 
-    console.log(jsErrorSelected.value);
-
     const showNice = () => {
       message.destroyAll();
       message.success('NICE NICE !!!!!!!!!!!!!!', {

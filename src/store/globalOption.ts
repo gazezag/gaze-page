@@ -8,16 +8,16 @@ export const useGlobal = defineStore('global', () => {
 
   const setBegin = (value: number) => {
     begin.value = value;
-    localStorage.setItem('begin', `${value}`);
+    sessionStorage.setItem('begin', `${value}`);
   };
 
   const setEnd = (value: number) => {
     end.value = value;
-    localStorage.setItem('end', `${value}`);
+    sessionStorage.setItem('end', `${value}`);
   };
   const setWeekDay = (value: number) => {
     weekDay.value = value;
-    localStorage.setItem('weekDay', `${value}`);
+    sessionStorage.setItem('weekDay', `${value}`);
   };
 
   return {

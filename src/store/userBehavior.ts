@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import { defineStore, storeToRefs } from 'pinia';
 import {
   HttpInfo,
   OperationInfo,
@@ -71,8 +71,9 @@ export const useUserBehaviorStore = defineStore('userBehavior', () => {
   });
 
   const operationSelected = computed(() => {
-    const { weekDay } = useGlobal();
-    const selected = userBehaviorInfo.operation[weekDay];
+    console.log(`operationSelected updated`);
+    const { weekDay } = storeToRefs(useGlobal());
+    const selected = userBehaviorInfo.operation[weekDay.value];
     if (!selected) return [];
 
     return selected.map(item => {
@@ -104,14 +105,14 @@ export const useUserBehaviorStore = defineStore('userBehavior', () => {
     return operationSelected.value.length;
   });
 
-  const pushRouterChange = (item: RouterChangeInfo) => {
-    pushStore(userBehaviorInfo.routerChange, item);
+  const pushRouterChange = (data: Array<RouterChangeInfo>) => {
+    data.forEach(item => pushStore(userBehaviorInfo.routerChange, item));
   };
-  const pushHttp = (item: HttpInfo) => {
-    pushStore(userBehaviorInfo.http, item);
+  const pushHttp = (data: Array<HttpInfo>) => {
+    data.forEach(item => pushStore(userBehaviorInfo.http, item));
   };
-  const pushOperation = (item: OperationInfo) => {
-    pushStore(userBehaviorInfo.operation, item);
+  const pushOperation = (data: Array<OperationInfo>) => {
+    data.forEach(item => pushStore(userBehaviorInfo.operation, item));
   };
 
   return {

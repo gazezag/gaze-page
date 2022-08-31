@@ -13,7 +13,7 @@ import { Dataset } from 'types/dataset';
 import { fetchAll } from 'api/firstFetch';
 import { initStore } from 'store/initStore';
 import { useGlobal } from 'store/globalOption';
-import { getWeekDayEnd, getWeekDayStart } from 'utils/time';
+import { getWeekDayEnd, getWeekDays, getWeekDayStart } from 'utils/time';
 
 export default defineComponent({
   name: 'App',
@@ -32,12 +32,12 @@ export default defineComponent({
       if (sessionStorage.getItem('opened')) {
         // freshed
         const { setBegin, setEnd, setWeekDay } = useGlobal();
-        setBegin(parseInt(localStorage.getItem('begin')!));
-        setEnd(parseInt(localStorage.getItem('end')!));
-        setWeekDay(parseInt(localStorage.getItem('weekDay')!));
+        setBegin(parseInt(sessionStorage.getItem('begin')!));
+        setEnd(parseInt(sessionStorage.getItem('end')!));
+        setWeekDay(parseInt(sessionStorage.getItem('weekDay')!));
       } else {
         // new page
-        localStorage.clear();
+        sessionStorage.clear();
       }
       sessionStorage.setItem('opened', '1');
     });

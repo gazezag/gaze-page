@@ -31,9 +31,9 @@ export const initStore = (dataset: Dataset) => {
   dataset.performanceTiming.forEach(info => pushPerformanceTiming(info));
   dataset.navigationTiming.forEach(info => pushNavigationTiming(info));
   dataset.resourceFlow.forEach(info => pushResourceFlow(info));
-  dataset.routerChange.forEach(info => pushRouterChange(info));
-  dataset.http.forEach(info => pushHttp(info));
-  dataset.operation.forEach(info => pushOperation(info));
+  dataset.routerChange.forEach(info => pushRouterChange([info]));
+  dataset.http.forEach(info => pushHttp([info]));
+  dataset.operation.forEach(info => pushOperation([info]));
   dataset.jsError.forEach(info => pushJsErrorInfo(info));
   dataset.stackTrace.forEach(info => pushStackTraceInfo(info));
   dataset.resourceError.forEach(info => pushResourceErrorInfo(info));
