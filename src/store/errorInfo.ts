@@ -9,7 +9,7 @@ import {
 } from 'types/errorInfo';
 import { getValueList } from 'utils/objectHandler';
 import { pushStore } from 'utils/storeHandler';
-import { getWeekDayEnd, getWeekDays } from 'utils/time';
+import { getIntervalIdx } from 'utils/time';
 import { computed, reactive } from 'vue';
 import { useGlobal } from './globalOption';
 
@@ -125,24 +125,16 @@ export const useErrorInfoStore = defineStore('errorInfo', () => {
   });
 
   const pushJsErrorInfo = (item: JsErrorInfo) => {
-    const weekDays = getWeekDays();
     const itemObj = { info: item, stackTrace: [] };
-    for (let i = 0; i < 7; i++) {
-      if (
-        (item.time > weekDays[i] && item.time < weekDays[i + 1]) ||
-        (i === 6 && item.time > weekDays[i] && item.time < getWeekDayEnd())
-      ) {
-        if (!errorInfo.jsError[i]) {
-          errorInfo.jsError[i] = [itemObj];
-        } else {
-          errorInfo.jsError[i].push(itemObj);
-        }
+    const idx = getIntervalIdx(item.time);
 
-        break;
-      } else {
-        errorInfo.jsError[i] = [];
-      }
+    if (errorInfo.jsError[idx]) {
+      errorInfo.jsError[idx].push(itemObj);
+    } else {
+      errorInfo.jsError[idx] = [itemObj];
     }
+
+    // pushStore(errorInfo.jsError, { info: item, stackTrace: [] });
   };
   const pushStackTraceInfo = (item: StackTraceInfo) => {
     errorInfo.jsError.forEach(errorInfoList => {

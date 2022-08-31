@@ -27,7 +27,6 @@ export const useVisitInfoStore = defineStore('visitInfo', () => {
   const pvTotal = computed(() => {
     // TODO
     let res = 0;
-    console.log(visitInfoList.value);
 
     try {
       res = visitInfoList.value.reduce((total, curList) => {
