@@ -73,7 +73,10 @@ export const getIntervalIdx = (time: number) => {
   let idx = -1;
 
   weekDays.some((weekTime, i) => {
-    if (time >= weekTime && time < weekDays[i + 1]) {
+    if (
+      (time >= weekTime && time < weekDays[i + 1]) ||
+      (i === 6 && time < weekTime + MILLISECONDS_PER_DAY)
+    ) {
       idx = i;
       return true;
     }

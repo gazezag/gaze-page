@@ -16,8 +16,7 @@ const getSourceListener = (target: string) => {
     eventName: string,
     callback: (e: MessageEvent<string>) => void
   ) => {
-    return addEventListener.call(
-      source,
+    return source.addEventListener(
       eventName,
       callback as EventListenerOrEventListenerObject,
       false
